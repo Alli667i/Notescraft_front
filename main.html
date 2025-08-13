@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>NotesCraft AI – Smart PDF to Notes Converter</title>
+  <meta name="description" content="Upload PDFs and instantly get structured, editable study notes with NotesCraft AI – perfect for students and professionals." />
+
+  <!-- Open Graph for social sharing -->
+  <meta property="og:title" content="NotesCraft AI – Smart PDF to Notes Converter" />
+  <meta property="og:description" content="Turn your PDFs into structured, editable notes in seconds. Free during Early Access!" />
+  <meta property="og:image" content="https://example.com/preview-image.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://notescraft.proxgate.xyz/" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NotesCraft AI – Smart PDF to Notes Converter" />
+  <meta name="twitter:description" content="Turn your PDFs into structured, editable notes in seconds. Free during Early Access!" />
+  <meta name="twitter:image" content="https://example.com/preview-image.png" />
+
+  <!-- Favicon Placeholder -->
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-emerald-100 via-white to-indigo-100 text-gray-900">
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 bg-white/90 backdrop-blur shadow-md z-40">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between" aria-label="Main navigation">
+      <a href="#" class="text-2xl font-extrabold text-teal-800">NotesCraft</a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex gap-8 text-teal-700 font-medium">
+        <a href="#features" class="hover:text-teal-900 transition">Features</a>
+        <a href="#problem" class="hover:text-teal-900 transition">The Challenge</a>
+        <a href="#pricing" class="hover:text-teal-900 transition">Pricing</a>
+        <a href="#get-started" class="hover:text-teal-900 transition">Get Started</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobileToggle" class="md:hidden p-2 rounded-lg text-teal-700 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-500" aria-label="Toggle menu">
+        <svg id="iconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="iconClose" class="hidden w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile Nav Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white/90 backdrop-blur-md shadow-md rounded-b-xl px-6 py-4 max-w-7xl mx-auto">
+      <a href="#features" class="block py-2 text-teal-700 font-medium hover:text-teal-900">Features</a>
+      <a href="#problem" class="block py-2 text-teal-700 font-medium hover:text-teal-900">The Challenge</a>
+      <a href="#pricing" class="block py-2 text-teal-700 font-medium hover:text-teal-900">Pricing</a>
+      <a href="#get-started" class="block py-2 text-teal-700 font-medium hover:text-teal-900">Get Started</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main>
+    <section class="py-20 text-center max-w-6xl mx-auto px-6 fade-in-up">
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-black mb-6">
+        NotesCraft AI – Powered by Intelligence, Built for Learners
+      </h1>
+      <p class="text-lg sm:text-xl mb-8 max-w-2xl mx-auto text-gray-900">
+        Upload your PDFs and get perfectly structured, editable study notes in seconds.
+      </p>
+      <a href="https://notescraft.proxgate.xyz/" class="px-10 py-4 bg-teal-700 hover:bg-teal-800 text-white rounded-xl font-semibold shadow-lg transition transform hover:scale-105">
+        Try NotesCraft for Free
+      </a>
+      <div class="mt-4">
+        <span class="bg-yellow-200 text-yellow-900 text-sm font-semibold px-4 py-1 rounded-full">
+          🚀 Early Access – 100% Free for Now
+        </span>
+      </div>
+    </section>
+
+    <!-- PROBLEM SECTION -->
+    <section id="problem" class="py-20 fade-in-up">
+      <div class="max-w-5xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-6 text-black">The Challenge & How NotesCraft Helps</h2>
+        <p class="text-lg text-gray-900 mb-4">
+          Reading long PDFs is slow, tiring, and easy to lose track of.
+        </p>
+        <p class="text-lg text-gray-900 mb-4">
+          Many AI tools shorten content too much — skipping important details because of length limits.
+        </p>
+        <p class="text-lg text-gray-900 font-medium">
+          NotesCraft processes entire PDFs without losing context, delivering clear, complete, and editable notes — so you spend more time learning and less time re-reading.
+        </p>
+      </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="py-20 max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center text-black mb-12 fade-in-up">Why NotesCraft?</h2>
+      <div class="grid md:grid-cols-3 gap-10">
+        <article class="bg-white p-6 rounded-2xl shadow-lg text-center fade-in-up">
+          <h3 class="text-xl font-semibold mb-4 text-black">Complete Extraction</h3>
+          <p class="text-gray-900">Our algorithm captures every important detail from your documents — no more missing context.</p>
+        </article>
+        <article class="bg-white p-6 rounded-2xl shadow-lg text-center fade-in-up">
+          <h3 class="text-xl font-semibold mb-4 text-black">Clean, Editable Notes</h3>
+          <p class="text-gray-900">Receive organized and easy-to-read notes in Word format, ready for your edits.</p>
+        </article>
+        <article class="bg-white p-6 rounded-2xl shadow-lg text-center fade-in-up">
+          <h3 class="text-xl font-semibold mb-4 text-black">Fast & Reliable</h3>
+          <p class="text-gray-900">From upload to download in seconds, so you can focus on learning — not formatting.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section id="pricing" class="py-20 fade-in-up">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-extrabold mb-6 text-black">Pricing</h2>
+        <p class="text-lg text-gray-900 mb-12 max-w-2xl mx-auto">
+          NotesCraft is currently in <span class="font-semibold text-teal-700">Early Access</span> — enjoy it <span class="font-semibold text-teal-700">free</span> while we perfect it. Pricing plans will be revealed upon full launch.
+        </p>
+
+        <div class="bg-white p-10 rounded-2xl shadow-xl inline-block border border-teal-100 fade-in-up">
+          <span class="text-5xl font-bold text-teal-700 block mb-3">Free</span>
+          <span class="text-teal-600 block mb-6">Early Access</span>
+          <ul class="text-left mb-8 space-y-3 text-gray-900">
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Unlimited PDF uploads</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> AI-powered note generation</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Download notes in Word format</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Priority processing during Early Access</li>
+          </ul>
+          <a href="https://notescraft.proxgate.xyz/" class="px-10 py-4 bg-teal-700 hover:bg-teal-800 text-white rounded-xl font-semibold shadow-lg transition transform hover:scale-105">
+            Start Using for Free
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section id="get-started" class="py-20 fade-in-up">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-6 text-black">Ready to Transform Your Notes?</h2>
+        <p class="text-lg mb-8 text-gray-900">Join thousands of learners using NotesCraft AI to study smarter.</p>
+        <a href="https://notescraft.proxgate.xyz/" class="px-10 py-4 bg-teal-700 hover:bg-teal-800 text-white rounded-xl font-semibold shadow-lg transition transform hover:scale-105">
+          Try NotesCraft for Free
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Mobile menu toggle
+    const toggle = document.getElementById('mobileToggle');
+    const menu  = document.getElementById('mobileMenu');
+    const iconOpen  = document.getElementById('iconOpen');
+    const iconClose = document.getElementById('iconClose');
+
+    toggle?.addEventListener('click', () => {
+      const isHidden = menu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden', !isHidden);
+      iconClose.classList.toggle('hidden', isHidden);
+    });
+
+    // Fade-in animations
+    const faders = document.querySelectorAll('.fade-in-up');
+    const appearOptions = { threshold: 0.2, rootMargin: "0px 0px -50px 0px" };
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, appearOptions);
+    faders.forEach(fader => appearOnScroll.observe(fader));
+  </script>
+</body>
+</html>
