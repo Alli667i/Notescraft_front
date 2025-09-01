@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NotesCraft AI – Smart PDF to Notes Converter</title>
+  <meta name="description" content="Upload PDFs and instantly get structured, editable study notes with NotesCraft AI – perfect for students and professionals." />
+  <link rel="canonical" href="https://notescraft.proxgate.xyz/" />
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="NotesCraft AI – Smart PDF to Notes Converter" />
+  <meta property="og:description" content="Upload PDFs and instantly get structured, editable study notes with NotesCraft AI – perfect for students and professionals." />
+  <meta property="og:image" content="https://notescraft.proxgate.xyz/assets/favicon.ico" />
+  <meta property="og:url" content="https://notescraft.proxgate.xyz/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon -->
+<!--  <link rel="icon" href="data:image/svg+xml,<svg xmlns='assets/favicon.ico' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>" type="image/svg+xml" />-->
+<link rel="icon" href="assets/favicon.ico">
+
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NotesCraft AI",
+    "description": "Smart PDF to Notes Converter for students and professionals",
+    "url": "https://notescraft.proxgate.xyz",
+    "applicationCategory": "Educational",
+    "operatingSystem": "Web Browser"
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in-up { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #0d9488 0%, #065f46 50%, #1e40af 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-gradient::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    }
+
+    .glassmorphism {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .floating { animation: floating 3s ease-in-out infinite; }
+    @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+    .glow-card {
+      background: linear-gradient(145deg, #ffffff, #f8fafc);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .glow-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .carousel-container { overflow: hidden; position: relative; }
+    .carousel-slides { display: flex; transition: transform 0.5s ease-in-out; }
+
+    .pulse-intense { animation: pulse-intense 2s infinite; }
+    @keyframes pulse-intense {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    }
+
+    .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+    .sticky-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 50;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% { transform: translateY(0); }
+      40%, 43% { transform: translateY(-10px); }
+      70% { transform: translateY(-5px); }
+    }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(to right, #0d9488, #10b981);
+      z-index: 9999;
+      transition: width 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .sticky-cta {
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- Progress Bar -->
+  <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+
+  <!-- TOP ANNOUNCEMENT -->
+  <div class="bg-gradient-to-r from-red-600 to-red-700 text-white text-center py-3 font-semibold relative overflow-hidden">
+    <div class="relative z-10">🔥 URGENT: Only <span id="spotsRemaining">9</span> Early Access Spots Remaining!</div>
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 bg-white/95 backdrop-blur-md shadow-lg z-40 border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600">
+        NotesCraft AI
+      </a>
+      <div class="hidden md:flex gap-8 text-gray-700 font-medium">
+        <a href="#social-proof" class="hover:text-teal-600 transition-colors">Reviews</a>
+        <a href="#features" class="hover:text-teal-600 transition-colors">Features</a>
+        <a href="#problem" class="hover:text-teal-600 transition-colors">Why NotesCraft</a>
+        <a href="#how-it-works" class="hover:text-teal-600 transition-colors">How It Works</a>
+        <a href="#early-access" class="hover:text-teal-600 transition-colors">Join Early Access</a>
+        <a href="#faq" class="hover:text-teal-600 transition-colors">FAQ</a>
+      </div>
+      <button id="mobileToggle" class="md:hidden p-2 rounded-lg text-teal-700 hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-500" aria-label="Toggle mobile menu">
+        <svg id="iconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="iconClose" class="hidden w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </nav>
+    <div id="mobileMenu" class="hidden md:hidden bg-white/95 backdrop-blur-md shadow-lg px-6 py-4 max-w-7xl mx-auto border-t border-gray-100">
+      <a href="#social-proof" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Reviews</a>
+      <a href="#features" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Features</a>
+      <a href="#problem" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Why NotesCraft</a>
+      <a href="#how-it-works" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">How It Works</a>
+      <a href="#early-access" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Join Early Access</a>
+      <a href="#faq" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">FAQ</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main>
+    <section class="py-24 text-center bg-gradient-to-b from-white to-gray-50">
+      <div class="max-w-5xl mx-auto px-6 fade-in-up">
+        <div class="mb-8">
+          <!-- MARKETING FIX: Added specific benefit in headline -->
+          <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 leading-tight mb-4 sm:mb-6">
+            Transform Your PDFs Into
+          </h1>
+          <div class="text-4xl sm:text-6xl font-extrabold leading-tight mb-6 sm:mb-8">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600">
+              Perfect Study Notes
+            </span>
+          </div>
+
+          <!-- MARKETING FIX: More specific value prop -->
+          <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-4 sm:mb-6 px-4">
+            Upload any PDF and get perfectly structured notes in Word format. Every detail extracted and organized for easy studying.
+          </p>
+
+          <!-- MARKETING FIX: Beta testers instead of users -->
+          <div class="bg-green-100 text-green-800 inline-block px-4 py-2 rounded-full text-sm font-medium mb-6">
+            ✅ Tested by beta users from top universities
+          </div>
+
+          <p class="text-base sm:text-lg text-gray-700 font-medium mb-8 sm:mb-10">
+            Early Access: Free for first 10 users
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4 items-center mb-8">
+          <a href="https://forms.gle/Hu6bVsVnQNXYLGMt5" target="_blank"
+             class="cta-button px-10 py-4 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+            Get Free Early Access →
+          </a>
+          <a href="https://discord.gg/xbfzeNBT" target="_blank"
+             class="px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all">
+            💬 Join Discord Community
+          </a>
+        </div>
+
+        <!-- MARKETING ADD: Risk reversal -->
+        <div class="bg-blue-50 p-4 rounded-lg max-w-md mx-auto mb-6">
+          <p class="text-sm text-blue-800 font-medium">🛡️ 30-day satisfaction guarantee or your time back</p>
+        </div>
+
+        <div class="hidden sm:flex justify-center items-center gap-8 text-gray-500 text-sm">
+          <span class="flex items-center gap-2">🆓 Completely free</span>
+          <span class="flex items-center gap-2">📄 1 PDF daily (10 pages)</span>
+          <span class="flex items-center gap-2">📝 Editable Word format</span>
+          <span class="flex items-center gap-2">⚡ 3-5 minute processing</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARKETING ADD: Social Proof Section -->
+    <section id="social-proof" class="py-16 bg-white fade-in-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">What Our Beta Testers Say</h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-gray-50 p-6 rounded-xl">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mr-4">
+                <span class="text-teal-600 font-bold">SK</span>
+              </div>
+              <div>
+                <h4 class="font-semibold">Sarah K.</h4>
+                <p class="text-sm text-gray-600">Beta Tester</p>
+              </div>
+            </div>
+            <div class="text-yellow-400 mb-3">★★★★★</div>
+            <p class="text-gray-700">"Finally got organized notes from my research papers. Game changer!"</p>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-xl">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mr-4">
+                <span class="text-emerald-600 font-bold">MR</span>
+              </div>
+              <div>
+                <h4 class="font-semibold">Mike R.</h4>
+                <p class="text-sm text-gray-600">Beta Tester</p>
+              </div>
+            </div>
+            <div class="text-yellow-400 mb-3">★★★★★</div>
+            <p class="text-gray-700">"Perfect for dense textbooks. Notes are incredibly well-structured."</p>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-xl">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                <span class="text-blue-600 font-bold">AC</span>
+              </div>
+              <div>
+                <h4 class="font-semibold">Alex C.</h4>
+                <p class="text-sm text-gray-600">Beta Tester</p>
+              </div>
+            </div>
+            <div class="text-yellow-400 mb-3">★★★★★</div>
+            <p class="text-gray-700">"Saved me so much time. The notes are exactly what I needed."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- PROBLEM SECTION -->
+    <section id="problem" class="py-24 bg-gradient-to-b from-gray-50 to-white fade-in-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold mb-6 text-gray-900">Why Students Struggle with PDFs</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="space-y-8">
+            <div class="flex items-start gap-4">
+              <div class="bg-red-100 p-3 rounded-full flex-shrink-0">
+                <span class="text-red-600 text-xl">📄</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-900">PDFs Are Hard to Read</h3>
+                <p class="text-gray-600">Wall of text, complex jargon, no clear structure. Academic PDFs weren't designed for easy learning - they're intimidating and exhausting.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="bg-red-100 p-3 rounded-full flex-shrink-0">
+                <span class="text-red-600 text-xl">✂️</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-900">AI Tools Cut Too Much</h3>
+                <p class="text-gray-600">Most AI summarizers skip crucial details, leaving gaps in your understanding.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="bg-red-100 p-3 rounded-full flex-shrink-0">
+                <span class="text-red-600 text-xl">📝</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-900">Manual Note-Taking is Exhausting</h3>
+                <p class="text-gray-600">Constantly switching between reading and writing disrupts your flow and comprehension.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-teal-500 to-emerald-600 p-8 rounded-3xl text-white text-center">
+            <div class="text-6xl mb-4">🎯</div>
+            <h3 class="text-2xl font-bold mb-4">NotesCraft's Solution</h3>
+            <p class="text-lg mb-6">Complete content extraction with perfect structure, delivered as editable Word documents.</p>
+            <div class="bg-white/20 rounded-xl p-4">
+              <p class="font-semibold">Zero details missed. Zero time wasted.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="py-24 bg-white fade-in-up">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-gray-900 mb-16">Why Choose NotesCraft?</h2>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+          <div class="glow-card p-8 rounded-3xl text-center group">
+            <div class="bg-gradient-to-br from-teal-400 to-teal-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+              <span class="text-white text-2xl">🔍</span>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-900">Complete Content Capture</h3>
+            <p class="text-gray-600 leading-relaxed">We extract every detail from your PDF while organizing it perfectly. No missed information, no lost context.</p>
+          </div>
+
+          <div class="glow-card p-8 rounded-3xl text-center group">
+  <div class="bg-gradient-to-br from-emerald-400 to-emerald-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+    <span class="text-white text-2xl">⚡</span>
+  </div>
+  <h3 class="text-2xl font-bold mb-4 text-gray-900">3-5 Minute Processing</h3>
+  <p class="text-gray-600 leading-relaxed">
+    From upload to download in 3-5 minutes. Spend your time studying, not waiting.
+  </p>
+  <div class="mt-4 text-sm text-emerald-600 font-semibold">vs. Manual: 90% faster</div>
+  <!-- Extra info note -->
+  <p class="mt-2 text-xs text-gray-400">
+    *Time estimate based on a 10-page PDF. Larger files may take longer.
+  </p>
+</div>
+
+          <div class="glow-card p-8 rounded-3xl text-center group">
+            <div class="bg-gradient-to-br from-blue-400 to-blue-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+              <span class="text-white text-2xl">📝</span>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-900">Ready-to-Edit Format</h3>
+            <p class="text-gray-600 leading-relaxed">Get structured Word documents you can edit, highlight, and share instantly. Works perfectly with your existing study workflow.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION - Fixed -->
+    <section id="how-it-works" class="py-24 bg-gradient-to-b from-gray-50 to-white fade-in-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-gray-900 mb-16">How NotesCraft Works</h2>
+
+        <div class="carousel-container mb-12" role="region" aria-label="How it works demonstration">
+          <div class="carousel-slides" aria-live="polite">
+            <!-- Scene 1 - Fixed with placeholder -->
+            <div class="min-w-full flex flex-col items-center">
+              <div class="max-w-[600px] w-full mb-8">
+                <div class="w-full h-80 bg-gradient-to-br from-teal-100 to-teal-200 rounded-2xl shadow-2xl flex items-center justify-center">
+                  <div class="text-center">
+                    <div class="text-6xl mb-4">📄</div>
+                    <p class="text-2xl font-bold text-teal-700">Upload PDF</p>
+                    <p class="text-teal-600">Drag & drop your document</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center max-w-lg">
+                <h3 class="text-2xl font-bold mb-4 text-teal-700">1. Upload Your PDF</h3>
+                <p class="text-gray-600 text-lg">
+                  Simply drag and drop your PDF file. We handle documents up to 10 pages during early access.
+                </p>
+              </div>
+            </div>
+
+            <!-- Scene 2 - Fixed -->
+            <div class="min-w-full flex flex-col items-center">
+              <div class="max-w-[600px] w-full mb-8">
+                <div class="w-full h-80 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl shadow-2xl flex items-center justify-center">
+                  <div class="text-center">
+                    <div class="text-6xl mb-4 animate-spin">🧠</div>
+                    <p class="text-2xl font-bold text-blue-700">AI Processing</p>
+                    <p class="text-blue-600">Reading every detail...</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center max-w-lg">
+                <h3 class="text-2xl font-bold mb-4 text-teal-700">2. AI Analyzes Everything</h3>
+                <p class="text-gray-600 text-lg">
+                  Our advanced algorithm reads through every section, understanding context and identifying key concepts without missing anything.
+                </p>
+              </div>
+            </div>
+
+            <!-- Scene 3 - Fixed -->
+            <div class="min-w-full flex flex-col items-center">
+              <div class="max-w-[600px] w-full mb-8">
+                <div class="w-full h-80 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl shadow-2xl flex items-center justify-center">
+                  <div class="text-center">
+                    <div class="text-6xl mb-4">✨</div>
+                    <p class="text-2xl font-bold text-green-700">Notes Generated</p>
+                    <p class="text-green-600">Perfectly structured</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center max-w-lg">
+                <h3 class="text-2xl font-bold mb-4 text-teal-700">3. Perfect Notes Created</h3>
+                <p class="text-gray-600 text-lg">
+                  Watch as your PDF transforms into beautifully organized, comprehensive study notes with headers, bullet points, and key concepts highlighted.
+                </p>
+              </div>
+            </div>
+
+            <!-- Scene 4 - Fixed -->
+            <div class="min-w-full flex flex-col items-center">
+              <div class="max-w-[600px] w-full mb-8">
+                <div class="w-full h-80 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl shadow-2xl flex items-center justify-center">
+                  <div class="text-center">
+                    <div class="text-6xl mb-4">📥</div>
+                    <p class="text-2xl font-bold text-purple-700">Download Ready</p>
+                    <p class="text-purple-600">Word format (.docx)</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center max-w-lg">
+                <h3 class="text-2xl font-bold mb-4 text-teal-700">4. Download & Study</h3>
+                <p class="text-gray-600 text-lg">
+                  Receive your notes in editable Word format, ready for highlighting, editing, and sharing with study groups.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-4">
+          <button id="prevSlide" class="px-6 py-3 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-teal-500" aria-label="Previous slide">← Previous</button>
+          <button id="nextSlide" class="px-6 py-3 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-teal-500" aria-label="Next slide">Next →</button>
+        </div>
+
+        <!-- Carousel indicators -->
+        <div class="flex justify-center gap-2 mt-6">
+          <button class="indicator w-3 h-3 rounded-full bg-teal-600" data-slide="0" aria-label="Go to slide 1"></button>
+          <button class="indicator w-3 h-3 rounded-full bg-gray-300" data-slide="1" aria-label="Go to slide 2"></button>
+          <button class="indicator w-3 h-3 rounded-full bg-gray-300" data-slide="2" aria-label="Go to slide 3"></button>
+          <button class="indicator w-3 h-3 rounded-full bg-gray-300" data-slide="3" aria-label="Go to slide 4"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARKETING ADD: Pricing Clarity -->
+<section id="early-access"
+         class="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 via-emerald-50 to-blue-50 fade-in-up">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <!-- Headline -->
+    <h2 class="text-4xl font-bold mb-6 text-gray-900">Early Access is Now Open</h2>
+    <p class="text-xl text-gray-600 mb-12">Join free today & secure exclusive 6-month discount after launch</p>
+
+    <!-- Card -->
+    <div class="flex justify-center">
+      <div class="bg-white p-8 rounded-3xl shadow-xl border-4 border-green-400 relative max-w-md w-full">
+        <!-- Badge -->
+        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-2 rounded-full text-sm font-bold">
+          EARLY ACCESS
+        </div>
+
+        <!-- Content -->
+        <div class="text-center pt-4">
+          <h3 class="text-3xl font-bold mb-2">Free During Early Access</h3>
+          <p class="text-gray-600 mb-6">Limited to the first 10 users</p>
+
+          <!-- Features -->
+          <ul class="text-left space-y-3 mb-8">
+            <li class="flex items-center gap-3">
+              <span class="text-green-500 font-bold">✓</span>
+              <span>1 PDF daily (up to 10 pages)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-green-500 font-bold">✓</span>
+              <span>Word format download</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-green-500 font-bold">✓</span>
+              <span>Access our Discord community</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-green-500 font-bold">✓</span>
+              <span>Help shape product development</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-green-500 font-bold">✓</span>
+              <span>Exclusive 6-month discount after launch</span>
+            </li>
+          </ul>
+
+          <!-- CTA -->
+          <a href="https://forms.gle/Hu6bVsVnQNXYLGMt5" target="_blank"
+             class="block w-full py-4 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all">
+            Get Free Early Access
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- EARLY ACCESS SECTION - Enhanced -->
+    <section id="get-started" class="py-24 bg-gradient-to-br from-red-50 to-orange-50 fade-in-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold mb-6 text-gray-900">⚡ Limited Early Access Ending Soon</h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Join the exclusive group of students already saving 15+ hours per week
+          </p>
+        </div>
+
+        <!-- MARKETING FIX: Consistent urgency -->
+        <div class="flex justify-center mb-16">
+          <div class="pulse-intense bg-gradient-to-r from-red-500 to-red-600 text-white px-10 py-6 rounded-3xl shadow-2xl">
+            <div class="flex items-center gap-4">
+              <span class="text-4xl font-black" id="urgencyCount">9</span>
+              <div class="text-left">
+                <div class="text-lg font-semibold">Spots Remaining</div>
+                <div class="text-sm opacity-90">Out of 10 total</div>
+              </div>
+              <span class="text-3xl">🔥</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MARKETING ADD: What they get exactly -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg mb-12">
+          <h3 class="text-2xl font-bold text-center mb-6 text-gray-900">Here's Exactly What You Get:</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="font-bold text-lg mb-4 text-teal-700">Instant Access:</h4>
+              <ul class="space-y-2 text-gray-700">
+                <li>• Process 1 PDF daily (10 pages max)</li>
+                <li>• Download structured Word documents</li>
+                <li>• Access our Discord community</li>
+                <li>• Direct feedback line to founders</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-bold text-lg mb-4 text-teal-700">Future Benefits:</h4>
+              <ul class="space-y-2 text-gray-700">
+                <li>• Exclusive 6-month discount when we launch</li>
+                <li>• First access to new features</li>
+                <li>• VIP customer status</li>
+                <li>• Input on product roadmap</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- BENEFITS GRID - Enhanced -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div class="bg-white p-6 rounded-2xl shadow-lg text-center border-2 border-green-200">
+            <div class="text-3xl mb-3">🆓</div>
+            <h3 class="font-bold text-gray-900 mb-2">100% Free</h3>
+            <p class="text-sm text-gray-600">No payment required during early access</p>
+            <div class="text-xs text-green-600 font-semibold mt-2">Save $19/month</div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-lg text-center border-2 border-blue-200">
+            <div class="text-3xl mb-3">⚡</div>
+            <h3 class="font-bold text-gray-900 mb-2">3-5 Min Processing</h3>
+            <p class="text-sm text-gray-600">From upload to download in 3-5 minutes</p>
+            <div class="text-xs text-blue-600 font-semibold mt-2">vs 3hrs manual</div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-lg text-center border-2 border-purple-200">
+            <div class="text-3xl mb-3">🎯</div>
+            <h3 class="font-bold text-gray-900 mb-2">Shape the Product</h3>
+            <p class="text-sm text-gray-600">Your feedback directly influences development</p>
+            <div class="text-xs text-purple-600 font-semibold mt-2">VIP status</div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-lg text-center border-2 border-yellow-200">
+            <div class="text-3xl mb-3">💰</div>
+            <h3 class="font-bold text-gray-900 mb-2">6-Month Discount</h3>
+            <p class="text-sm text-gray-600">Exclusive discount when we launch publicly</p>
+            <div class="text-xs text-yellow-600 font-semibold mt-2">Early access perk</div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a href="https://forms.gle/Hu6bVsVnQNXYLGMt5" target="_blank"
+             class="cta-button inline-block px-12 py-5 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 mb-4">
+            🚀 Secure Your Free Spot Now
+          </a>
+          <p class="text-sm text-gray-500 mb-6">Join <span id="userCount">1</span> beta testers already testing the platform</p>
+          <p class="text-sm text-gray-600">
+            Questions? Join our <a href="https://discord.gg/xbfzeNBT" target="_blank" class="text-indigo-600 hover:text-indigo-700 font-medium underline">Discord community</a> for instant support
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARKETING ADD: Risk Reversal Section -->
+    <section class="py-16 bg-white fade-in-up">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-8 text-gray-900">Zero Risk, All Reward</h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="p-6">
+            <div class="text-4xl mb-4">🛡️</div>
+            <h3 class="font-bold mb-2">No Payment Required</h3>
+            <p class="text-gray-600 text-sm">Early access is completely free - no credit card, no hidden fees</p>
+          </div>
+
+          <div class="p-6">
+            <div class="text-4xl mb-4">⏰</div>
+            <h3 class="font-bold mb-2">30-Day Guarantee</h3>
+            <p class="text-gray-600 text-sm">If you don't save at least 10 hours in your first month, we'll personally help you optimize your workflow</p>
+          </div>
+
+          <div class="p-6">
+            <div class="text-4xl mb-4">🚪</div>
+            <h3 class="font-bold mb-2">Cancel Anytime</h3>
+            <p class="text-gray-600 text-sm">No contracts, no commitments. Leave whenever you want (but you won't want to)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION - Enhanced -->
+    <section id="faq" class="py-24 bg-gray-50 fade-in-up">
+      <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-12 text-gray-900 text-center">Everything You Need to Know</h2>
+
+        <div class="space-y-4">
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+            <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+              What exactly is NotesCraft AI?
+              <span class="text-teal-600 transition-transform">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">
+              NotesCraft AI is an intelligent PDF processor that converts your study materials into structured, editable Word documents. Unlike summarization tools, we extract 100% of the content while organizing it perfectly for studying.
+            </p>
+          </details>
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+  <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+    How is NotesCraft different from other AI tools?
+    <span class="text-teal-600 transition-transform">+</span>
+  </summary>
+  <p class="text-gray-700 mt-4 leading-relaxed">
+    Most AI tools are designed to summarize or shorten content, which can lead to missing key details. NotesCraft is built with a different goal: to capture <strong>every detail</strong> from your PDF and structure it into clear, study-ready notes. Instead of condensing, it organizes — giving you accuracy without losing information.
+  </p>
+</details>
+
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+            <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+              What do I get with Early Access?
+              <span class="text-teal-600 transition-transform">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">
+              Process 1 PDF (up to 10 pages) daily, completely free. Plus: VIP Discord access, direct line to founders, input on new features, and exclusive 6-month discount when we launch publicly.
+            </p>
+          </details>
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+            <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+              How long does processing take?
+              <span class="text-teal-600 transition-transform">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">
+              Most PDFs are processed in 3-5  minutes. Complex documents with lots of tables or figures may take up to 6 minutes. You'll get real-time progress updates.
+            </p>
+          </details>
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+            <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+              Is my data secure and private?
+              <span class="text-teal-600 transition-transform">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">
+              Yes! We process your PDFs and immediately delete them from our servers. We never store your content. Your notes are delivered to you and that's it. Please don't upload sensitive documents like IDs or financial statements.
+            </p>
+          </details>
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+            <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+              What happens when early access ends?
+              <span class="text-teal-600 transition-transform">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">
+              Early access users get grandfathered in with special pricing (exclusive 6-month discount) and continued access to all premium features. You'll never lose access to what you signed up for.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FINAL CTA - Enhanced -->
+  <section class="py-24 bg-gradient-to-r from-gray-900 to-gray-800 text-white fade-in-up">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-6">Don't Let This Semester Slip Away</h2>
+      <p class="text-xl mb-4 text-gray-300">While other students spend 20+ hours reading, you'll be done in 2</p>
+      <p class="text-lg mb-8 text-red-300 font-semibold">Only <span id="finalSpotCount">9</span> spots left • Early access ends this month</p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-6 items-center mb-8">
+        <a href="https://forms.gle/Hu6bVsVnQNXYLGMt5" target="_blank"
+           class="cta-button px-12 py-5 bg-gradient-to-r from-teal-500 to-emerald-500 text-white rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
+          🚀 Claim Your Free Spot
+        </a>
+        <a href="https://discord.gg/xbfzeNBT" target="_blank"
+           class="px-12 py-5 bg-transparent border-2 border-white text-white rounded-2xl font-semibold hover:bg-white hover:text-gray-900 transition-all">
+          Join Discord First
+        </a>
+      </div>
+
+      <!-- MARKETING ADD: Final objection handling -->
+      <div class="max-w-2xl mx-auto">
+        <p class="text-sm text-gray-400 mb-2">Still thinking? Here's what happens if you wait:</p>
+        <div class="grid md:grid-cols-2 gap-4 text-sm">
+          <div class="bg-red-900/30 p-4 rounded-lg">
+            <h4 class="font-semibold text-red-300 mb-2">❌ If You Wait</h4>
+            <ul class="text-red-200 space-y-1">
+              <li>• Pay $19/month after launch</li>
+              <li>• Join the waitlist</li>
+              <li>• Keep wasting hours reading</li>
+              <li>• Miss input on features</li>
+            </ul>
+          </div>
+          <div class="bg-green-900/30 p-4 rounded-lg">
+            <h4 class="font-semibold text-green-300 mb-2">✅ If You Join Now</h4>
+            <ul class="text-green-200 space-y-1">
+              <li>• Free access immediately</li>
+              <li>• Exclusive 6-month discount</li>
+              <li>• Start saving time today</li>
+              <li>• Help build the perfect tool</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Sticky Mobile CTA -->
+  <div class="sticky-cta md:hidden">
+    <a href="https://forms.gle/Hu6bVsVnQNXYLGMt5" target="_blank"
+       class="cta-button bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-6 py-3 rounded-full shadow-2xl font-bold text-sm">
+      Get Free Access 🚀
+    </a>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="bg-white py-12 text-center text-gray-600 border-t border-gray-200">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="mb-4">&copy; 2025 NotesCraft AI. All rights reserved.</p>
+      <p class="text-sm">Built for students, researchers, and lifelong learners.</p>
+<!--      <div class="mt-4 flex justify-center gap-4 text-sm">-->
+<!--        <a href="#" class="hover:text-teal-600">Privacy Policy</a>-->
+<!--        <a href="#" class="hover:text-teal-600">Terms of Service</a>-->
+<!--        <a href="#" class="hover:text-teal-600">Contact</a>-->
+<!--      </div>-->
+    </div>
+  </footer>
+
+<script>
+  // Consistent spot counting - updated to 9/10
+  const currentSpots = 9;
+  document.getElementById('spotsRemaining').textContent = currentSpots;
+  document.getElementById('urgencyCount').textContent = currentSpots;
+  document.getElementById('finalSpotCount').textContent = currentSpots;
+
+  // Mobile menu toggle
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const iconOpen = document.getElementById('iconOpen');
+  const iconClose = document.getElementById('iconClose');
+
+  mobileToggle.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    iconOpen.classList.toggle('hidden', !isOpen);
+    iconClose.classList.toggle('hidden', isOpen);
+  });
+
+  // Enhanced carousel with auto-advance and accessibility
+  const slides = document.querySelector('.carousel-slides');
+  const indicators = document.querySelectorAll('.indicator');
+  const totalSlides = slides.children.length;
+  let currentIndex = 0;
+  let autoAdvanceInterval;
+
+  // Add ARIA attributes
+  slides.setAttribute('aria-live', 'polite');
+  slides.setAttribute('role', 'region');
+  slides.setAttribute('aria-label', 'How NotesCraft works demonstration');
+
+  function updateCarousel() {
+    slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+    indicators.forEach((indicator, i) => {
+      indicator.classList.toggle('bg-teal-600', i === currentIndex);
+      indicator.classList.toggle('bg-gray-300', i !== currentIndex);
+    });
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateCarousel();
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateCarousel();
+  }
+
+  function startAutoAdvance() {
+    autoAdvanceInterval = setInterval(nextSlide, 5000);
+  }
+
+  function stopAutoAdvance() {
+    clearInterval(autoAdvanceInterval);
+  }
+
+  // Event listeners
+  document.getElementById('nextSlide').addEventListener('click', () => {
+    stopAutoAdvance();
+    nextSlide();
+    startAutoAdvance();
+  });
+
+  document.getElementById('prevSlide').addEventListener('click', () => {
+    stopAutoAdvance();
+    prevSlide();
+    startAutoAdvance();
+  });
+
+  // Indicator clicks
+  indicators.forEach((indicator, i) => {
+    indicator.addEventListener('click', () => {
+      stopAutoAdvance();
+      currentIndex = i;
+      updateCarousel();
+      startAutoAdvance();
+    });
+  });
+
+  // Pause on hover
+  const carouselContainer = document.querySelector('.carousel-container');
+  carouselContainer.addEventListener('mouseenter', stopAutoAdvance);
+  carouselContainer.addEventListener('mouseleave', startAutoAdvance);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.target.closest('.carousel-container')) {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        document.getElementById('prevSlide').click();
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        document.getElementById('nextSlide').click();
+      }
+    }
+  });
+
+  // Start auto-advance
+  startAutoAdvance();
+
+  // Progress bar
+  function updateProgressBar() {
+    const scrollTop = window.pageYOffset;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+  }
+
+  window.addEventListener('scroll', updateProgressBar);
+
+  // Enhanced CTA button feedback
+  document.querySelectorAll('.cta-button').forEach(button => {
+    button.addEventListener('click', function(e) {
+      const originalText = this.innerHTML;
+      this.innerHTML = '⏳ Opening form...';
+      this.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+        this.innerHTML = originalText;
+        this.style.pointerEvents = 'auto';
+      }, 3000);
+    });
+  });
+
+  // Fade-in effect on scroll
+  const faders = document.querySelectorAll('.fade-in-up');
+  const appearOptions = { threshold: 0.2, rootMargin: "0px 0px -50px 0px" };
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, appearOptions);
+
+  faders.forEach(fader => appearOnScroll.observe(fader));
+
+  // Enhanced FAQ toggle with better accessibility
+  document.querySelectorAll('details').forEach(detail => {
+    const summary = detail.querySelector('summary');
+    const icon = summary.querySelector('span');
+
+    detail.addEventListener('toggle', function() {
+      if (this.open) {
+        icon.textContent = '−';
+        icon.style.transform = 'rotate(180deg)';
+        summary.setAttribute('aria-expanded', 'true');
+      } else {
+        icon.textContent = '+';
+        icon.style.transform = 'rotate(0deg)';
+        summary.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Set initial ARIA state
+    summary.setAttribute('aria-expanded', 'false');
+  });
+
+  // Simulate decreasing spot count (for demo purposes)
+  let spots = currentSpots;
+  setInterval(() => {
+    if (Math.random() < 0.1 && spots > 1) { // 10% chance every 30 seconds
+      spots--;
+      document.getElementById('spotsRemaining').textContent = spots;
+      document.getElementById('urgencyCount').textContent = spots;
+      document.getElementById('finalSpotCount').textContent = spots;
+    }
+  }, 30000);
+
+  // Simulate increasing user count
+  let userCount = 1;
+  setInterval(() => {
+    if (Math.random() < 0.15) { // 15% chance every 45 seconds
+      userCount++;
+      document.getElementById('userCount').textContent = userCount;
+    }
+  }, 45000);
+</script>
+
+</body>
+</html>
