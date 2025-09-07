@@ -113,6 +113,55 @@
         right: 10px;
       }
     }
+
+
+    /* Add this CSS to your <style> section */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0d9488, #10b981);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top-btn:hover {
+  background: linear-gradient(135deg, #0f766e, #059669);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.back-to-top-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .back-to-top-btn {
+    bottom: 90px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+  }
+}
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -138,8 +187,8 @@
       </a>
       <div class="hidden md:flex gap-8 text-gray-700 font-medium">
 <!--        <a href="#social-proof" class="hover:text-teal-600 transition-colors">Reviews</a>-->
-        <a href="#features" class="hover:text-teal-600 transition-colors">Features</a>
         <a href="#problem" class="hover:text-teal-600 transition-colors">Why NotesCraft</a>
+        <a href="#features" class="hover:text-teal-600 transition-colors">Features</a>
         <a href="#how-it-works" class="hover:text-teal-600 transition-colors">How It Works</a>
         <a href="#early-access" class="hover:text-teal-600 transition-colors">Join Early Access</a>
         <a href="#faq" class="hover:text-teal-600 transition-colors">FAQ</a>
@@ -156,8 +205,8 @@
       </button>
     </nav>
     <div id="mobileMenu" class="hidden md:hidden bg-white/95 backdrop-blur-md shadow-lg px-6 py-4 max-w-7xl mx-auto border-t border-gray-100">
-      <a href="#features" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Features</a>
       <a href="#problem" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Why NotesCraft</a>
+      <a href="#features" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Features</a>
       <a href="#how-it-works" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">How It Works</a>
       <a href="#early-access" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Join Early Access</a>
       <a href="#faq" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">FAQ</a>
@@ -810,14 +859,14 @@ No contracts or commitments required</p>
     </div>
   </footer>
 
-
+<!-- Add this HTML right before the closing </body> tag -->
+<button id="backToTop" class="back-to-top-btn" aria-label="Back to top">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18,15 12,9 6,15"></polyline>
+  </svg>
+</button>
 
 <script>
-<!--  // Consistent spot counting - updated to 9/10-->
-<!--  const currentSpots = 9;-->
-<!--  document.getElementById('spotsRemaining').textContent = currentSpots;-->
-<!--  document.getElementById('urgencyCount').textContent = currentSpots;-->
-<!--  document.getElementById('finalSpotCount').textContent = currentSpots;-->
 
   // Mobile menu toggle
   const mobileToggle = document.getElementById('mobileToggle');
@@ -974,25 +1023,29 @@ No contracts or commitments required</p>
     summary.setAttribute('aria-expanded', 'false');
   });
 
-  // Simulate decreasing spot count (for demo purposes)
-  let spots = currentSpots;
-  setInterval(() => {
-    if (Math.random() < 0.1 && spots > 1) { // 10% chance every 30 seconds
-      spots--;
-      document.getElementById('spotsRemaining').textContent = spots;
-      document.getElementById('urgencyCount').textContent = spots;
-      document.getElementById('finalSpotCount').textContent = spots;
-    }
-  }, 30000);
 
-<!--  // Simulate increasing user count-->
-<!--  let userCount = 1;-->
-<!--  setInterval(() => {-->
-<!--    if (Math.random() < 0.15) { // 15% chance every 45 seconds-->
-<!--      userCount++;-->
-<!--      document.getElementById('userCount').textContent = userCount;-->
-<!--    }-->
-<!--  }, 45000);-->
+
+  /* Add this JavaScript to your existing <script> section */
+// Back to top button functionality
+const backToTopBtn = document.getElementById('backToTop');
+
+function toggleBackToTopBtn() {
+  if (window.pageYOffset > 300) {
+    backToTopBtn.classList.add('visible');
+  } else {
+    backToTopBtn.classList.remove('visible');
+  }
+}
+
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+window.addEventListener('scroll', toggleBackToTopBtn);
+
 </script>
 
 </body>
