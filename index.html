@@ -1196,10 +1196,7 @@ Early access users get 6 months of special pricing when we launch, plus priority
          class="px-8 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all">
         Get Early Access
       </a>
-<!--      <a href="https://discord.gg/2U3W8b57" target="_blank"-->
-<!--         class="px-8 py-3 border-2 border-teal-600 text-teal-600 rounded-xl font-semibold hover:bg-teal-600 hover:text-white transition-all">-->
-<!--        Join Discord-->
-<!--      </a>-->
+
     </div>
   </div>
 </section>
@@ -1401,7 +1398,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const submitBtn = document.getElementById('submitBtn');
   const successMessage = document.getElementById('successMessage');
   const errorMessage = document.getElementById('errorMessage');
-  const spotsRemaining = document.getElementById('spots-remaining');
+<!--  const spotsRemaining = document.getElementById('spots-remaining');-->
   const agreeTermsCheckbox = document.getElementById('agreeTerms');
 
   signupForm.addEventListener('submit', async function(e) {
@@ -1449,8 +1446,8 @@ document.addEventListener('DOMContentLoaded', function() {
       signupForm.style.display = 'none';
 
       // Update spots remaining
-      const currentSpots = parseInt(spotsRemaining.textContent);
-      spotsRemaining.textContent = Math.max(0, currentSpots - 1);
+<!--      const currentSpots = parseInt(spotsRemaining.textContent);-->
+<!--      spotsRemaining.textContent = Math.max(0, currentSpots - 1);-->
 
       console.log('New signup:', userData);
 
