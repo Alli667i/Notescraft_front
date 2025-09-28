@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NotesCraft AI – Smart PDF to Notes Converter</title>
+  <meta name="description" content="Upload PDFs and instantly get structured, editable study notes with NotesCraft AI – perfect for students and professionals." />
+  <link rel="canonical" href="https://notescraftai.com/" />
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="NotesCraft AI – Smart PDF to Notes Converter" />
+  <meta property="og:description" content="Upload PDFs and instantly get structured, editable study notes with NotesCraft AI – perfect for students and professionals." />
+  <meta property="og:image" content="https://notescraftai.com/assets/favicon.ico" />
+  <meta property="og:url" content="https://notescraftai.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon -->
+<!--  <link rel="icon" href="data:image/svg+xml,<svg xmlns='assets/favicon.ico' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>" type="image/svg+xml" />-->
+<link rel="icon" href="assets/favicon.ico">
+
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NotesCraft AI",
+    "description": "Smart PDF to Notes Converter for students and professionals",
+    "url": "https://notescraftai.com",
+    "applicationCategory": "Educational",
+    "operatingSystem": "Web Browser"
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in-up { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #0d9488 0%, #065f46 50%, #1e40af 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-gradient::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    }
+
+    .glassmorphism {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .floating { animation: floating 3s ease-in-out infinite; }
+    @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+    .glow-card {
+      background: linear-gradient(145deg, #ffffff, #f8fafc);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .glow-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .carousel-container { overflow: hidden; position: relative; }
+    .carousel-slides { display: flex; transition: transform 0.5s ease-in-out; }
+
+    .pulse-intense { animation: pulse-intense 2s infinite; }
+    @keyframes pulse-intense {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    }
+
+    .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+    .sticky-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 50;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% { transform: translateY(0); }
+      40%, 43% { transform: translateY(-10px); }
+      70% { transform: translateY(-5px); }
+    }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(to right, #0d9488, #10b981);
+      z-index: 9999;
+      transition: width 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .sticky-cta {
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+
+
+    /* Add this CSS to your <style> section */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0d9488, #10b981);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top-btn:hover {
+  background: linear-gradient(135deg, #0f766e, #059669);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.back-to-top-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .back-to-top-btn {
+    bottom: 90px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+  }
+}
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<!-- Add this right after the progress bar div -->
+<div class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center py-2 text-sm">
+  Already have early access? <a href="https://app.notescraftai.com/" class="underline font-semibold">Login to your app here</a>
+</div>
+
+  <!-- Progress Bar -->
+  <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+
+
+
+
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 bg-white/95 backdrop-blur-md shadow-lg z-40 border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600">
+        NotesCraft AI
+      </a>
+
+      <div class="hidden md:flex gap-8 text-gray-700 font-medium">
+        <a href="#problem" class="hover:text-teal-600 transition-colors">Why NotesCraft</a>
+        <a href="#transformation-example" class="hover:text-teal-600 transition-colors">See Example</a>
+        <a href="#how-it-works" class="hover:text-teal-600 transition-colors">How It Works</a>
+        <a href="#early-access" class="hover:text-teal-600 transition-colors">Join Early Access</a>
+        <a href="#faq" class="hover:text-teal-600 transition-colors">FAQ</a>
+<!--        <a href="https://discord.gg/2U3W8b57" target="_blank" class="hover:text-teal-600 transition-colors">Join Discord</a>-->
+      </div>
+
+      <button id="mobileToggle" class="md:hidden p-2 rounded-lg text-teal-700 hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-500" aria-label="Toggle mobile menu">
+
+        <svg id="iconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+
+        <svg id="iconClose" class="hidden w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+
+      </button>
+
+    </nav>
+
+    <div id="mobileMenu" class="hidden md:hidden bg-white/95 backdrop-blur-md shadow-lg px-6 py-4 max-w-7xl mx-auto border-t border-gray-100">
+      <a href="#problem" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Why NotesCraft</a>
+      <a href="#transformation-example" class="hover:text-teal-600 transition-colors">See Example</a>
+      <a href="#how-it-works" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">How It Works</a>
+      <a href="#early-access" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">Join Early Access</a>
+      <a href="#faq" class="block py-3 text-gray-700 font-medium hover:text-teal-600 transition-colors">FAQ</a>
+<!--      <a href="https://discord.gg/2U3W8b57" target="_blank" class="hover:text-teal-600 transition-colors">Join Discord</a>-->
+
+    </div>
+
+  </header>
+
+
+
+<!-- HERO SECTION -->
+
+<main>
+
+  <section class="py-24 text-center bg-gradient-to-b from-white to-gray-50">
+
+    <div class="max-w-5xl mx-auto px-6 fade-in-up">
+
+      <div class="mb-12">
+        <!-- Updated headline -->
+
+        <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 leading-tight mb-6 sm:mb-8">
+          Turn <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600">PDFs</span> Into Complete Study Notes
+        </h1>
+
+        <!-- Consistent subtitle for both desktop and mobile -->
+       <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-8 sm:mb-10 px-4">
+         Unlike AI summarizers, we preserve every detail while organizing your PDFs into clean study notes.
+
+        <p class="text-base sm:text-lg text-emerald-600 font-medium mb-8 sm:mb-12">Free Early Access - Limited to 10 users</p>
+
+        </div>
+
+        <div class="flex justify-center mb-6">
+
+          <a href="https://notescraftai.com/#early-access"
+             class="cta-button px-10 py-4 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+            Get Free Early Access →
+          </a>
+
+        </div>
+
+       <!-- Desktop benefits - horizontal -->
+        <div class="hidden sm:flex justify-center items-center gap-8 text-gray-500 text-sm">
+          <span class="flex items-center gap-2">💳 No credit card required</span>
+          <span class="flex items-center gap-2">📄 Process 25 pages daily</span>
+          <span class="flex items-center gap-2">📝 Editable Word format</span>
+<span class="flex items-center gap-2">⚡ 3-5 minute processing (up to 15 min for complex docs)</span>        </div>
+
+
+        <!-- Mobile benefits - centered grid -->
+        <div class="sm:hidden flex flex-wrap justify-center gap-x-6 gap-y-2 text-gray-500 text-xs max-w-xs mx-auto">
+          <span class="flex items-center gap-1">💳 No card needed</span>
+          <span class="flex items-center gap-1">⚡ Fast Processing</span>
+          <span class="flex items-center gap-1">📄 25 pages daily</span>
+          <span class="flex items-center gap-1">📝 Word format</span>
+        </div>
+
+    </div>
+
+    </section>
+
+
+
+
+    <!-- Problem Discussion Section  -->
+
+    <section id="problem" class="py-24 bg-gradient-to-b from-gray-50 to-white fade-in-up">
+
+      <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold mb-6 text-gray-900">Why Students Struggle with PDFs</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="space-y-8">
+            <div class="flex items-start gap-4">
+              <div class="bg-red-100 p-3 rounded-full flex-shrink-0">
+                <span class="text-red-600 text-xl">📄</span>
+              </div>
+
+              <div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-900">PDFs Are Hard to Read</h3>
+                <p class="text-gray-600">Learning from PDFs can be tough — long text, tricky terms, and unclear structure make it harder to absorb..</p>
+              </div>
+
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="bg-red-100 p-3 rounded-full flex-shrink-0">
+                <span class="text-red-600 text-xl">✂️</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-900">AI Tools Cut Too Much</h3>
+                <p class="text-gray-600">Most AI summarizers skip crucial details, leaving gaps in your understanding.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="bg-red-100 p-3 rounded-full flex-shrink-0">
+                <span class="text-red-600 text-xl">📝</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-900">Manual Note-Taking is Exhausting</h3>
+                <p class="text-gray-600">Constantly switching between reading and writing disrupts your flow and comprehension.</p>
+              </div>
+            </div>
+          </div>
+
+
+           <!--Problem Solution Given-->
+
+          <div class="bg-gradient-to-br from-teal-500 to-emerald-600 p-8 rounded-3xl text-white text-center">
+
+            <div class="text-6xl mb-4">🎯</div>
+  <h3 class="text-2xl font-bold mb-6">NotesCraft Solves All Three Problems</h3>
+
+            <div class="space-y-4 mb-6">
+
+    <p class="text-lg"><strong>Makes PDFs readable</strong> with clear structure and organization</p>
+    <p class="text-lg"><strong>Keeps every detail</strong> instead of cutting important information</p>
+    <p class="text-lg"><strong>Eliminates manual work</strong> so you can focus on learning</p>
+
+            </div>
+
+            <div class="bg-white/20 rounded-xl p-4">
+
+              <p class="font-semibold">Complete content. Perfect structure. Zero effort.</p>
+
+            </div>
+
+          </div>
+
+          </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- Simple Working Example Section -->
+
+  <section id="transformation-example" class="py-16 md:py-24 bg-white fade-in-up">
+
+  <div class="max-w-6xl mx-auto px-4 md:px-6">
+
+    <div class="text-center mb-12">
+
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">See the Transformation</h2>
+
+      <p class="text-lg md:text-xl text-gray-600">Dense textbook content becomes study-ready notes</p>
+
+    </div>
+
+
+    <!-- Mobile: Stacked Layout -->
+
+    <div class="block lg:hidden space-y-6">
+
+      <!-- Before Section - Mobile -->
+
+      <div class="bg-red-50 border-2 border-red-200 rounded-xl p-4 w-full">
+
+        <div class="flex items-center mb-3">
+
+          <div class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold mr-2">BEFORE</div>
+
+          <span class="text-red-700 font-semibold text-sm">Original PDF</span>
+
+        </div>
+
+
+        <div class="bg-white p-4 rounded-lg border border-red-200 mb-3" style="height: 180px; overflow-y: auto;">
+
+      <p class="text-gray-800 text-sm leading-[1.4]">
+        "The word economy comes from the Greek word oikonomos, which means 'one who manages a household.' At first, this origin might seem peculiar. But in fact, households and economies have much in common. A household faces many decisions. It must decide which members do which tasks and what each gets in return: Who cooks dinner? Who does the laundry?"
+
+      </p>
+
+    </div>
+
+
+        <div class="flex items-center text-sm text-red-600">
+
+          <span class="mr-2">⚠️</span>
+
+          <span>Dense, hard to scan</span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Arrow Down -->
+
+      <div class="text-center py-2">
+
+        <div class="inline-flex items-center justify-center w-10 h-10 bg-gradient-to-r from-teal-500 to-emerald-500 text-white rounded-full">
+
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+
+      </svg>
+
+        </div>
+
+      </div>
+
+
+  <!-- After Section - Mobile -->
+
+  <div class="bg-green-50 border-2 border-green-200 rounded-xl p-4 w-full">
+
+    <div class="flex items-center mb-3">
+
+      <div class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold mr-2">AFTER</div>
+
+      <span class="text-green-700 font-semibold text-sm">NotesCraft Output</span>
+
+    </div>
+
+
+    <div class="bg-white p-4 rounded-lg border border-green-200 mb-3" style="height: 180px; overflow-y: auto;">
+
+      <div class="text-gray-800 leading-[1.4]">
+
+        <div class="font-bold text-base mb-2">What is Economics?</div>
+
+        <p class="mb-2 text-sm">The word economy originates from the Greek oikonomos, meaning "one who manages a household." This highlights a core similarity between households and entire societies: both must manage limited resources.</p>
+
+
+        <div class="space-y-1">
+
+          <div class="flex items-start text-sm">
+
+            <span class="text-green-600 mr-1 flex-shrink-0">•</span>
+
+            <span>Just as a household decides who cooks or gets extra dessert, a society must decide who performs which jobs (e.g., growing food, designing software)</span>
+
+          </div>
+
+          <div class="flex items-start text-sm">
+
+            <span class="text-green-600 mr-1 flex-shrink-0">•</span>
+
+            <span>Distribution decisions: who gets luxury vs. basic goods (caviar vs. potatoes, Ferrari vs. bus)</span>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="flex items-center text-sm text-green-600">
+
+      <span class="mr-2">✅</span>
+
+      <span>Structured, study-ready</span>
+
+    </div>
+
+  </div>
+
+    </div>
+
+
+
+
+    <!-- Desktop: Side by Side Layout -->
+
+    <div class="hidden lg:grid lg:grid-cols-2 gap-8 items-start">
+
+      <!-- Before Section - Desktop -->
+
+      <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
+
+        <div class="flex items-center mb-4">
+
+          <div class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">BEFORE</div>
+
+          <span class="text-red-700 font-semibold">Original PDF Content</span>
+
+        </div>
+
+
+        <div class="bg-white p-4 rounded-lg border border-red-200 mb-4">
+
+          <p class="text-gray-800 text-sm leading-relaxed">
+            "The word economy comes from the Greek word oikonomos, which means 'one who manages a household.' At first, this origin might seem peculiar. But in fact, households and economies have much in common. A household faces many decisions. It must decide which members of the household do which tasks and what each member gets in return: Who cooks dinner? Who does the laundry? Who gets the extra dessert at dinner? Who gets to choose what TV show to watch? In short, the household must allocate its scarce resources among its various members, taking into account each member's abilities, efforts, and desires..."
+
+          </p>
+
+        </div>
+
+
+        <div class="flex items-center text-sm text-red-600">
+
+         <span class="mr-2">⚠️</span>
+
+          <span>Dense, hard to scan, difficult to study from</span>
+
+        </div>
+
+      </div>
+
+
+      <!-- After Section - Desktop -->
+
+      <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-6">
+
+        <div class="flex items-center mb-4">
+
+          <div class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">AFTER</div>
+
+          <span class="text-green-700 font-semibold">NotesCraft Output</span>
+
+        </div>
+
+
+        <div class="bg-white p-4 rounded-lg border border-green-200 mb-4">
+
+          <div class="text-gray-800 text-sm leading-relaxed">
+
+            <div class="font-bold text-base mb-2">What is Economics?</div>
+
+            <p class="mb-3">The word economy originates from the Greek oikonomos, meaning "one who manages a household." This highlights a core similarity between households and entire societies: both must manage limited resources.</p>
+
+            <ul class="space-y-1 text-sm">
+
+              <li class="flex items-start">
+
+                <span class="text-green-600 mr-2">•</span>
+
+                <span>Just as a household decides who cooks or gets extra dessert, a society must decide who performs which jobs (e.g., growing food, designing software)</span>
+
+              </li>
+
+              <li class="flex items-start">
+
+                <span class="text-green-600 mr-2">•</span>
+
+                <span>Distribution decisions: who gets luxury vs. basic goods (caviar vs. potatoes, Ferrari vs. bus)</span>
+
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex items-center text-sm text-green-600">
+
+          <span class="mr-2">✅</span>
+
+          <span>Structured, scannable, perfect for studying</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Results Summary -->
+
+    <div class="mt-12 bg-gradient-to-r from-teal-50 to-emerald-50 rounded-xl md:rounded-2xl p-6 md:p-8 text-center">
+
+      <h3 class="text-xl md:text-2xl font-bold mb-4 text-gray-900">Same Content, 10x Better Organization</h3>
+
+
+      <div class="grid grid-cols-3 gap-3 md:gap-6 mb-6">
+
+        <div class="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+
+          <div class="text-lg md:text-2xl font-bold text-teal-600 mb-1">100%</div>
+
+          <div class="text-xs md:text-sm text-gray-600">Content Preserved</div>
+
+        </div>
+
+        <div class="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+
+          <div class="text-lg md:text-2xl font-bold text-emerald-600 mb-1">90%</div>
+
+          <div class="text-xs md:text-sm text-gray-600">Time Saved</div>
+
+        </div>
+
+        <div class="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+
+<div class="text-lg md:text-2xl font-bold text-blue-600 mb-1">3-15 min</div>
+
+          <div class="text-xs md:text-sm text-gray-600">Processing Time</div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Full Example Toggle -->
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center items-center">
+
+        <button id="showFullExample"
+                class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all text-sm md:text-base">
+          See Full Example
+
+
+        </button>
+
+        <a href="#early-access"
+           class="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all text-sm md:text-base">
+          Explore Early Access
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Simple Expandable Section (No Modal) -->
+
+    <div id="fullExampleSection" class="hidden mt-12 bg-white border-2 border-teal-200 rounded-2xl p-6 md:p-8">
+
+      <div class="flex justify-between items-center mb-6">
+
+        <h3 class="text-xl md:text-2xl font-bold text-gray-900">Complete Example Transformation</h3>
+
+        <button id="closeFullExample" class="text-gray-500 hover:text-gray-700 text-xl font-bold">&times;</button>
+
+      </div>
+
+
+      <div class="space-y-6 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
+        <!-- Full Before -->
+
+        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+
+          <h4 class="font-bold text-red-700 mb-3">Original Textbook Content</h4>
+
+          <div class="bg-white p-4 rounded-lg text-sm leading-relaxed text-gray-800 max-h-80 overflow-y-auto">
+
+            <p class="mb-4">The word economy comes from the Greek word oikonomos, which means "one who manages a household." At first, this origin might seem peculiar. But in fact, households and economies have much in common. A household faces many decisions. It must decide which members of the household do which tasks and what each member gets in return: Who cooks dinner? Who does the laundry? Who gets the extra dessert at dinner? Who gets to choose what TV show to watch? In short, the household must allocate its scarce resources among its various members, taking into account each member's abilities, efforts, and desires.</p>
+
+            <p class="mb-4">Like a household, a society faces many decisions. A society must find some way to decide what jobs will be done and who will do them. It needs some people to grow food, other people to make clothing, and still others to design computer software. Once society has allocated people (as well as land, buildings, and machines) to various jobs, it must also allocate the output of goods and services they produce. It must decide who will eat caviar and who will eat potatoes. It must decide who will drive a Ferrari and who will take the bus.</p>
+
+            <p class="mb-4">The management of society's resources is important because resources are scarce. Scarcity means that society has limited resources and therefore cannot produce all the goods and services people wish to have. Just as each member of a household cannot get everything he or she wants, each individual in a society cannot attain the highest standard of living to which he or she might aspire.</p>
+
+            <p>Economics is the study of how society manages its scarce resources. In most societies, resources are allocated not by an all-powerful dictator but through the combined actions of millions of households and firms. Economists therefore study how people make decisions: how much they work, what they buy, how much they save, and how they invest their savings.</p>
+
+          </div>
+
+        </div>
+
+
+        <!-- Full After -->
+
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+
+          <h4 class="font-bold text-green-700 mb-3">NotesCraft Structured Output</h4>
+
+          <div class="bg-white p-4 rounded-lg text-sm leading-relaxed text-gray-800 max-h-80 overflow-y-auto">
+
+    <div class="mb-4">
+
+      <h5 class="font-bold text-base mb-2">What is Economics?</h5>
+
+      <p class="mb-2">The word economy originates from the Greek oikonomos, meaning one who manages a household. This highlights a core similarity between households and entire societies: both must manage limited resources.</p>
+
+      <ul class="ml-4 space-y-1">
+
+        <li>• Just as a household decides who cooks or gets extra dessert, a society must decide who performs which jobs (e.g., growing food, designing software) and how the resulting goods and services are distributed among its members (e.g., who drives a luxury car vs. takes the bus).</li>
+
+      </ul>
+
+      <p class="mt-2">The way society manages its resources is critical because these resources are inherently scarce.</p>
+
+    </div>
+
+
+            <div class="mb-4">
+
+              <h5 class="font-bold text-base mb-2">Understanding Scarcity</h5>
+
+
+              <ul class="ml-4 space-y-1">
+
+
+        <li>• Scarcity means that society possesses limited resources and, as a result, cannot produce all the goods and services that people desire.</li>
+
+        <li>• This limitation means that individuals in a society cannot attain every item or achieve the highest standard of living they might aspire to.</li>
+
+      </ul>
+
+
+            </div>
+
+
+            <div class="mb-4">
+
+      <h5 class="font-bold text-base mb-2">The Study of Economics</h5>
+
+      <ul class="ml-4 space-y-1">
+
+        <li>• Economics is fundamentally the study of how society manages its scarce resources.</li>
+
+        <li>• Unlike a single authority, resources in most societies are allocated through the collective decisions and actions of millions of households and businesses.</li>
+
+      </ul>
+
+              <p class="mt-2">Economists analyze various aspects of this management:</p>
+
+      <ul class="ml-4 space-y-1 mt-1">
+
+        <li>• How individuals make choices: This includes decisions about work, consumption, saving, and investment.</li>
+
+        <li>• How people interact: For example, how buyers and sellers in a market determine the prices and quantities of goods.</li>
+
+        <li>• Major economic trends: Such as changes in average income, unemployment rates, and inflation (the general increase in prices).</li>
+
+      </ul>
+
+    </div>
+
+
+            <div class="bg-blue-50 p-3 rounded-lg">
+
+      <h5 class="font-bold text-blue-700 mb-2">Key Definitions</h5>
+
+      <p class="text-sm"><strong>Scarcity:</strong> The condition where society's resources are limited, making it impossible to produce all the goods and services that people want.</p>
+
+      <p class="text-sm"><strong>Economics:</strong> The social science that studies how society manages its scarce resources.</p>
+
+    </div>
+
+  </div>
+
+        </div>
+
+
+      <div class="mt-6 text-center">
+
+        <a href="#early-access"
+           class="inline-block px-8 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all">
+          Try It Free - Get Early Access
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  </div>
+
+  </section>
+
+
+    <!-- HOW IT WORKS SECTION  -->
+
+    <section id="how-it-works" class="py-24 bg-gradient-to-b from-gray-50 to-white fade-in-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-gray-900 mb-16">How NotesCraft Works</h2>
+
+        <div class="carousel-container mb-12" role="region" aria-label="How it works demonstration">
+          <div class="carousel-slides" aria-live="polite">
+
+
+            <!-- Scene 1  -->
+            <div class="min-w-full flex flex-col items-center">
+              <div class="max-w-[600px] w-full mb-8">
+                <div class="w-full h-80 bg-gradient-to-br from-teal-100 to-teal-200 rounded-2xl shadow-2xl flex items-center justify-center">
+                  <div class="text-center">
+                    <div class="text-6xl mb-4">📄</div>
+                    <p class="text-2xl font-bold text-teal-700">Upload PDF</p>
+                    <p class="text-teal-600">Drag & drop your document</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center max-w-lg">
+                <h3 class="text-2xl font-bold mb-4 text-teal-700">1. Upload Your PDF</h3>
+                <p class="text-gray-600 text-lg">
+                  Simply drag and drop your PDF file. We handle documents up to 25 pages during early access.
+                </p>
+              </div>
+            </div>
+
+
+            <!-- Scene 2 -->
+            <div class="min-w-full flex flex-col items-center">
+              <div class="max-w-[600px] w-full mb-8">
+                <div class="w-full h-80 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl shadow-2xl flex items-center justify-center">
+                  <div class="text-center">
+                    <div class="text-6xl mb-4 animate-spin">🧠</div>
+                    <p class="text-2xl font-bold text-blue-700">AI Processing</p>
+                    <p class="text-blue-600">Reading every detail...</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center max-w-lg">
+                <h3 class="text-2xl font-bold mb-4 text-teal-700">2. AI Analyzes Everything</h3>
+                <p class="text-gray-600 text-lg">
+                  Our advanced algorithm reads through every section, understanding context and identifying key concepts without missing anything.
+                </p>
+              </div>
+            </div>
+
+            <!-- Scene 3  -->
+            <div class="min-w-full flex flex-col items-center">
+              <div class="max-w-[600px] w-full mb-8">
+                <div class="w-full h-80 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl shadow-2xl flex items-center justify-center">
+                  <div class="text-center">
+                    <div class="text-6xl mb-4">✨</div>
+                    <p class="text-2xl font-bold text-green-700">Notes Generated</p>
+                    <p class="text-green-600">Perfectly structured</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center max-w-lg">
+                <h3 class="text-2xl font-bold mb-4 text-teal-700">3. Perfect Notes Created</h3>
+                <p class="text-gray-600 text-lg">
+                  Watch as your PDF transforms into beautifully organized, comprehensive study notes with headers, bullet points, and key concepts highlighted.
+                </p>
+              </div>
+            </div>
+
+            <!-- Scene 4  -->
+            <div class="min-w-full flex flex-col items-center">
+              <div class="max-w-[600px] w-full mb-8">
+                <div class="w-full h-80 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl shadow-2xl flex items-center justify-center">
+                  <div class="text-center">
+                    <div class="text-6xl mb-4">📥</div>
+                    <p class="text-2xl font-bold text-purple-700">Download Ready</p>
+                    <p class="text-purple-600">Word format (.docx)</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center max-w-lg">
+                <h3 class="text-2xl font-bold mb-4 text-teal-700">4. Download & Study</h3>
+                <p class="text-gray-600 text-lg">
+                  Receive your notes in editable Word format, ready for highlighting, editing, and sharing with study groups.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-4">
+          <button id="prevSlide" class="px-6 py-3 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-teal-500" aria-label="Previous slide">← Previous</button>
+          <button id="nextSlide" class="px-6 py-3 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-teal-500" aria-label="Next slide">Next →</button>
+        </div>
+
+
+        <!--  Buttons to move slides -->
+
+        <div class="flex justify-center gap-2 mt-6">
+          <button class="indicator w-3 h-3 rounded-full bg-teal-600" data-slide="0" aria-label="Go to slide 1"></button>
+          <button class="indicator w-3 h-3 rounded-full bg-gray-300" data-slide="1" aria-label="Go to slide 2"></button>
+          <button class="indicator w-3 h-3 rounded-full bg-gray-300" data-slide="2" aria-label="Go to slide 3"></button>
+          <button class="indicator w-3 h-3 rounded-full bg-gray-300" data-slide="3" aria-label="Go to slide 4"></button>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Early Access Pricing -->
+
+<section id="early-access"
+         class="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 via-emerald-50 to-blue-50 fade-in-up">
+
+  <div class="max-w-6xl mx-auto px-6 text-center">
+
+    <!-- Headline -->
+
+    <h2 class="text-4xl font-bold mb-6 text-gray-900">Early Access is Now Open</h2>
+
+    <p class="text-xl text-gray-600 mb-12">Join free today & secure exclusive 6-month discount after launch</p>
+
+    <!-- Card -->
+
+    <div class="flex justify-center">
+
+      <div class="bg-white p-8 rounded-3xl shadow-xl border-4 border-green-400 relative max-w-md w-full">
+
+        <!-- Badge -->
+
+        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-2 rounded-full text-sm font-bold">
+          EARLY ACCESS
+
+        </div>
+
+
+        <!-- Content -->
+
+        <div class="text-center pt-4">
+
+
+          <h3 class="text-3xl font-bold mb-2">Free During Early Access</h3>
+
+          <p class="text-gray-600 mb-6">Limited to the first 10 users</p>
+
+
+          <!-- Spots remaining indicator -->
+
+          <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-6">
+
+            <p class="text-red-700 font-semibold text-sm">
+              ⚡ Only <span id="spots-remaining">8</span> spots remaining
+
+            </p>
+
+          </div>
+
+
+          <!-- Features -->
+
+          <ul class="text-left space-y-3 mb-8">
+
+            <li class="flex items-center gap-3">
+
+              <span class="text-green-500 font-bold">✓</span>
+
+              <span>Process 25 pages daily</span>
+
+            </li>
+
+            <li class="flex items-center gap-3">
+
+              <span class="text-green-500 font-bold">✓</span>
+
+              <span>Word format download</span>
+
+            </li>
+
+            <li class="flex items-center gap-3">
+
+              <span class="text-green-500 font-bold">✓</span>
+
+              <span>Access our Discord community</span>
+
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-green-500 font-bold">✓</span>
+              <span>Help shape product development</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-green-500 font-bold">✓</span>
+              <span>Exclusive 6-month discount after launch</span>
+            </li>
+          </ul>
+
+
+<!-- Signup Form -->
+
+<form id="signupForm" class="space-y-4 mb-6">
+  <div class="text-left">
+    <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+    <input type="text" id="name" name="name" required
+           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition-colors">
+  </div>
+
+  <div class="text-left">
+    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+    <input type="email" id="email" name="email" required
+           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition-colors">
+  </div>
+
+  <div class="text-left">
+    <label for="university" class="block text-sm font-semibold text-gray-700 mb-2">University/School (Optional)</label>
+    <input type="text" id="university" name="university"
+           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition-colors">
+  </div>
+
+
+  <!-- NEW: Terms and Privacy Agreement -->
+
+  <div class="text-left">
+    <label class="flex items-start gap-3 cursor-pointer">
+      <input type="checkbox" id="agreeTerms" name="agreeTerms" required
+             class="mt-1 w-4 h-4 text-teal-600 border-2 border-gray-300 rounded focus:ring-teal-500 focus:ring-2">
+      <span class="text-sm text-gray-600 leading-relaxed">
+        I agree to the <a href="terms.html" target="_blank" class="text-teal-600 hover:underline">Terms of Service</a> and <a href="privacy.html" target="_blank" class="text-teal-600 hover:underline">Privacy Policy</a>
+      </span>
+    </label>
+  </div>
+
+  <button type="submit" id="submitBtn"
+          class="w-full py-4 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+    Get Free Early Access
+  </button>
+</form>
+
+
+          <!-- Success Message (hidden by default) -->
+
+          <div id="successMessage" class="hidden bg-green-100 border border-green-300 rounded-xl p-4 text-green-800">
+            <div class="text-lg font-bold mb-2">🎉 Welcome aboard!</div>
+            <p class="text-sm">Check your email within 24 hours for access instructions and your Discord invite.</p>
+          </div>
+
+
+          <!-- Error Message (hidden by default) -->
+          <div id="errorMessage" class="hidden bg-red-100 border border-red-300 rounded-xl p-4 text-red-800">
+            <div class="text-lg font-bold mb-2">❌ Something went wrong</div>
+            <p class="text-sm">Please try again or contact us at <a href="mailto:support@notescraft.ai" class="underline">support@notescraft.ai</a></p>
+          </div>
+
+
+          <!-- Trust indicators -->
+          <div class="text-xs text-gray-500 mt-4">
+            <p>🔒 Your email is safe with us • No spam, ever</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Additional benefits below the form -->
+
+    <div class="mt-12 grid md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+
+      <div class="bg-white p-4 rounded-xl shadow-md">
+
+        <div class="text-2xl mb-2">🆓</div>
+
+        <h4 class="font-bold text-sm">100% Free</h4>
+
+        <p class="text-xs text-gray-600">No payment required</p>
+
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow-md">
+
+        <div class="text-2xl mb-2">⚡</div>
+
+        <h4 class="font-bold text-sm">3-15 Min Processing</h4>
+
+        <p class="text-xs text-gray-600">From upload to download</p>
+
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow-md">
+
+        <div class="text-2xl mb-2">🎯</div>
+
+        <h4 class="font-bold text-sm">Shape the Product</h4>
+
+        <p class="text-xs text-gray-600">Your feedback matters</p>
+
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow-md">
+
+        <div class="text-2xl mb-2">💰</div>
+
+        <h4 class="font-bold text-sm">6-Month Discount</h4>
+
+        <p class="text-xs text-gray-600">Exclusive early access perk</p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+    <!-- FAQ SECTION - Enhanced -->
+
+  <section id="faq" class="py-24 bg-gray-50 fade-in-up">
+
+      <div class="max-w-4xl mx-auto px-6">
+
+        <h2 class="text-4xl font-bold mb-12 text-gray-900 text-center">Everything You Need to Know</h2>
+
+
+        <div class="space-y-4">
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+
+            <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+              What exactly is NotesCraft AI?
+
+              <span class="text-teal-600 transition-transform">+</span>
+
+            </summary>
+
+            <p class="text-gray-700 mt-4 leading-relaxed">
+              NotesCraft AI is an intelligent PDF processor that converts your study materials into structured, editable Word documents. Unlike summarization tools, we extract 100% of the content while organizing it perfectly for studying.
+
+            </p>
+
+          </details>
+
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+
+            <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+    How is NotesCraft different from other AI tools?
+    <span class="text-teal-600 transition-transform">+</span>
+
+            </summary>
+
+            <p class="text-gray-700 mt-4 leading-relaxed">
+    Most AI tools are designed to summarize or shorten content, which can lead to missing key details. NotesCraft is built with a different goal: to capture <strong>every detail</strong> from your PDF and structure it into clear, study-ready notes. Instead of condensing, it organizes — giving you accuracy without losing information.
+
+            </p>
+
+          </details>
+
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+            <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+              What do I get with Early Access?
+              <span class="text-teal-600 transition-transform">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">
+              Process 25 pages daily across multiple PDFs. Plus: VIP Discord access, direct line to founders, input on new features, and exclusive 6-month discount when we launch publicly.
+            </p>
+          </details>
+
+      <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+  <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+    How long does processing take?
+    <span class="text-teal-600 transition-transform">+</span>
+  </summary>
+  <p class="text-gray-700 mt-4 leading-relaxed">
+    Processing typically takes 3-8 minutes depending on document size and complexity, with a maximum of 15 minutes for the most complex documents. You'll see live progress updates throughout the process.
+  </p>
+</details>
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+  <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+    Is my data secure and private?
+    <span class="text-teal-600 transition-transform">+</span>
+  </summary>
+  <p class="text-gray-700 mt-4 leading-relaxed">
+    Yes! We process your PDFs and immediately delete them from our servers. We never store your content. Your notes are delivered to you and that's it. Please don't upload sensitive documents like IDs or financial statements.
+  </p>
+  <p class="text-gray-600 mt-3 text-sm">
+    For complete details about our data handling practices, please read our <a href="privacy.html" class="text-teal-600 hover:underline">Privacy Policy</a>.
+  </p>
+</details>
+
+          <details class="bg-white p-6 rounded-2xl cursor-pointer border border-gray-200 hover:border-teal-300 transition-colors">
+            <summary class="text-lg font-semibold text-gray-900 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+              What happens when early access ends?
+              <span class="text-teal-600 transition-transform">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">
+Early access users get 6 months of special pricing when we launch, plus priority support and early feature access during that period.            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+
+ <!-- FINAL CTA - Simplified -->
+<section class="py-16 bg-gradient-to-r from-teal-50 to-emerald-50 fade-in-up">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-4 text-gray-900">Ready to Transform Your Study Process?</h2>
+    <p class="text-lg mb-8 text-gray-600">Join the early access program and start converting PDFs to perfect notes today.</p>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-4 items-center">
+      <a href="#early-access"
+         class="px-8 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all">
+        Get Early Access
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+<!-- FOOTER -->
+<footer class="bg-white py-12 text-center text-gray-600 border-t border-gray-200">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="mb-4">&copy; 2025 NotesCraft AI. All rights reserved.</p>
+  &nbsp;
+    <div class="flex justify-center gap-6 text-sm">
+      <a href="privacy.html" class="hover:text-teal-600 transition-colors">Privacy Policy</a>
+      <a href="terms.html" class="hover:text-teal-600 transition-colors">Terms of Service</a>
+    </div>
+
+  &nbsp;
+    <p class="text-sm mt-2">Built for students, researchers, and lifelong learners.</p>
+
+
+  </div>
+
+</footer>
+
+
+
+<button id="backToTop" class="back-to-top-btn" aria-label="Back to top">
+
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18,15 12,9 6,15"></polyline>
+
+
+  </svg>
+
+</button>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LN47BFH410"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LN47BFH410');
+</script>
+
+
+
+<script>
+
+
+
+
+
+
+
+
+
+
+  // Mobile menu toggle
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const iconOpen = document.getElementById('iconOpen');
+  const iconClose = document.getElementById('iconClose');
+
+  mobileToggle.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    iconOpen.classList.toggle('hidden', !isOpen);
+    iconClose.classList.toggle('hidden', isOpen);
+  });
+
+  // Manual-only carousel - no auto-advance
+const slides = document.querySelector('.carousel-slides');
+const indicators = document.querySelectorAll('.indicator');
+const totalSlides = slides.children.length;
+let currentIndex = 0;
+
+// Add ARIA attributes for accessibility
+slides.setAttribute('role', 'region');
+slides.setAttribute('aria-label', 'How NotesCraft works demonstration');
+
+function updateCarousel() {
+  slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+  indicators.forEach((indicator, i) => {
+    indicator.classList.toggle('bg-teal-600', i === currentIndex);
+    indicator.classList.toggle('bg-gray-300', i !== currentIndex);
+  });
+}
+
+function nextSlide() {
+  currentIndex = (currentIndex + 1) % totalSlides;
+  updateCarousel();
+}
+
+function prevSlide() {
+  currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+  updateCarousel();
+}
+
+// Manual navigation only
+document.getElementById('nextSlide').addEventListener('click', nextSlide);
+document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+// Indicator clicks
+indicators.forEach((indicator, i) => {
+  indicator.addEventListener('click', () => {
+    currentIndex = i;
+    updateCarousel();
+  });
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.target.closest('.carousel-container')) {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      prevSlide();
+    }
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      nextSlide();
+    }
+  }
+});
+
+  // Progress bar
+  function updateProgressBar() {
+    const scrollTop = window.pageYOffset;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+  }
+
+  window.addEventListener('scroll', updateProgressBar);
+
+  // Enhanced CTA button feedback
+  document.querySelectorAll('.cta-button').forEach(button => {
+    button.addEventListener('click', function(e) {
+      const originalText = this.innerHTML;
+      this.innerHTML = '⏳ Opening form...';
+      this.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+        this.innerHTML = originalText;
+        this.style.pointerEvents = 'auto';
+      }, 3000);
+    });
+  });
+
+  // Fade-in effect on scroll
+  const faders = document.querySelectorAll('.fade-in-up');
+  const appearOptions = { threshold: 0.2, rootMargin: "0px 0px -50px 0px" };
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, appearOptions);
+
+  faders.forEach(fader => appearOnScroll.observe(fader));
+
+  // Enhanced FAQ toggle with better accessibility
+  document.querySelectorAll('details').forEach(detail => {
+    const summary = detail.querySelector('summary');
+    const icon = summary.querySelector('span');
+
+    detail.addEventListener('toggle', function() {
+      if (this.open) {
+        icon.textContent = '−';
+        icon.style.transform = 'rotate(180deg)';
+        summary.setAttribute('aria-expanded', 'true');
+      } else {
+        icon.textContent = '+';
+        icon.style.transform = 'rotate(0deg)';
+        summary.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Set initial ARIA state
+    summary.setAttribute('aria-expanded', 'false');
+  });
+
+
+
+  /* Add this JavaScript to your existing <script> section */
+// Back to top button functionality
+const backToTopBtn = document.getElementById('backToTop');
+
+function toggleBackToTopBtn() {
+  if (window.pageYOffset > 300) {
+    backToTopBtn.classList.add('visible');
+  } else {
+    backToTopBtn.classList.remove('visible');
+  }
+}
+
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+window.addEventListener('scroll', toggleBackToTopBtn);
+// Updated signup form handler
+document.addEventListener('DOMContentLoaded', function() {
+  const signupForm = document.getElementById('signupForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const successMessage = document.getElementById('successMessage');
+  const errorMessage = document.getElementById('errorMessage');
+<!--  const spotsRemaining = document.getElementById('spots-remaining');-->
+  const agreeTermsCheckbox = document.getElementById('agreeTerms');
+
+  signupForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Check if terms are agreed to
+    if (!agreeTermsCheckbox.checked) {
+      alert('Please agree to the Terms of Service and Privacy Policy to continue.');
+      return;
+    }
+
+    // Disable form
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Signing You Up...';
+
+    // Hide any previous messages
+    successMessage.classList.add('hidden');
+    errorMessage.classList.add('hidden');
+
+    // Get form data
+    const formData = new FormData(signupForm);
+    const userData = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      university: formData.get('university') || 'Not specified',
+      agreeTerms: formData.get('agreeTerms') === 'on',
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      const response = await fetch('https://formspree.io/f/xvgblrpy', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      // Show success message
+      successMessage.classList.remove('hidden');
+      signupForm.style.display = 'none';
+
+      // Update spots remaining
+<!--      const currentSpots = parseInt(spotsRemaining.textContent);-->
+<!--      spotsRemaining.textContent = Math.max(0, currentSpots - 1);-->
+
+      console.log('New signup:', userData);
+
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'sign_up', {
+          method: 'early_access_form'
+        });
+      }
+
+    } catch (error) {
+      console.error('Signup error:', error);
+      errorMessage.classList.remove('hidden');
+
+      // Re-enable form
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get Free Early Access';
+    }
+  });
+});
+
+// Simple expand/collapse functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const showBtn = document.getElementById('showFullExample');
+  const closeBtn = document.getElementById('closeFullExample');
+  const fullSection = document.getElementById('fullExampleSection');
+
+  if (showBtn && closeBtn && fullSection) {
+    showBtn.addEventListener('click', function() {
+      fullSection.classList.remove('hidden');
+      fullSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    closeBtn.addEventListener('click', function() {
+      fullSection.classList.add('hidden');
+    });
+  }
+});
+
+</script>
+
+</body>
+</html>
