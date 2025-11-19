@@ -61,23 +61,7 @@
       </div>
     </nav>
 
-    <!-- Mobile Menu -->
-<!--    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-white shadow-2xl z-50 md:hidden hidden">-->
-<!--      <div class="p-6">-->
-<!--        <button id="closeMenuBtn" class="absolute top-4 right-4 text-gray-700">-->
-<!--          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>-->
-<!--          </svg>-->
-<!--        </button>-->
 
-<!--        <div class="mt-12 flex flex-col gap-6">-->
-<!--          <a href="#demo" class="text-gray-700 hover:text-teal-600 transition-colors text-lg">See Demo</a>-->
-<!--          <a href="#how-it-works" class="text-gray-700 hover:text-teal-600 transition-colors text-lg">How It Works</a>-->
-<!--          <a href="#signup" class="text-gray-700 hover:text-teal-600 transition-colors text-lg">Get Access</a>-->
-<!--          <a href="https://app.notescraftai.com" class="px-5 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition-colors text-center text-lg">Login</a>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
   </header>
 
   <!-- Mobile Menu Overlay -->
@@ -282,14 +266,14 @@
         </div>
 
         <!-- Success/Error Messages -->
-        <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 text-green-800 rounded-lg">
-          <div class="font-bold mb-2">Welcome aboard!</div>
-          <p class="text-sm">Check your email within 24 hours for access instructions.</p>
-        </div>
-
-        <div id="errorMessage" class="hidden mt-6 p-4 bg-red-100 text-red-800 rounded-lg">
-          <div class="font-bold mb-2">Something went wrong</div>
-          <p class="text-sm">Please try again or contact support.</p>
+       <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 text-green-800 rounded-lg">
+          <div class="font-bold text-lg mb-2">🎉 Welcome aboard!</div>
+          <p class="text-sm mb-4">Check your email within 24 hours for access instructions.</p>
+          <a href="https://discord.gg/FZjTNR6kFE" target="_blank" rel="noopener noreferrer"
+             class="inline-block w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+            🎮 Join Our Discord Community
+          </a>
+          <p class="text-xs mt-2 text-green-700">Get instant support, tips, and connect with other users!</p>
         </div>
       </div>
     </div>
@@ -332,38 +316,6 @@
   </footer>
 
   <script>
-    // Mobile menu functionality
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const closeMenuBtn = document.getElementById('closeMenuBtn');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const menuLinks = mobileMenu.querySelectorAll('a');
-
-    function openMenu() {
-      mobileMenu.classList.remove('hidden');
-      mobileMenu.classList.add('active');
-      menuOverlay.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeMenu() {
-      mobileMenu.classList.remove('active');
-      setTimeout(() => {
-        mobileMenu.classList.add('hidden');
-      }, 300);
-      menuOverlay.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-
-    mobileMenuBtn.addEventListener('click', openMenu);
-    closeMenuBtn.addEventListener('click', closeMenu);
-    menuOverlay.addEventListener('click', closeMenu);
-
-    // Close menu when clicking on a link
-    menuLinks.forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
     // Progress bar
     function updateProgressBar() {
       const scrollTop = window.pageYOffset;
