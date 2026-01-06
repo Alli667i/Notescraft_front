@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NotesCraft AI – Transform PDFs Into Perfect Study Notes</title>
-  <meta name="description" content="Stop wasting hours rewriting notes. Upload any PDF and get organized, editable study notes in minutes. Every detail preserved." />
+  <title>NotesCraft AI – PDF to Study Notes Converter</title>
+  <meta name="description" content="Transform dense PDFs into organized, editable study notes in minutes. Complete content extraction with perfect structure." />
   <link rel="icon" href="assets/favicon.ico">
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,6 +22,7 @@
       transition: width 0.3s ease;
     }
 
+    /* Mobile menu styles */
     .mobile-menu {
       transform: translateX(100%);
       transition: transform 0.3s ease-in-out;
@@ -30,23 +31,15 @@
       transform: translateX(0);
     }
 
-    /* Pulse animation for urgency */
-    @keyframes pulse-subtle {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
+    /* Password strength indicator */
+    .password-strength {
+      height: 4px;
+      border-radius: 2px;
+      transition: all 0.3s ease;
     }
-    .pulse-subtle {
-      animation: pulse-subtle 2s ease-in-out infinite;
-    }
-
-    /* Arrow animation */
-    @keyframes bounce-down {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(5px); }
-    }
-    .bounce-down {
-      animation: bounce-down 2s ease-in-out infinite;
-    }
+    .strength-weak { width: 33%; background-color: #ef4444; }
+    .strength-medium { width: 66%; background-color: #f59e0b; }
+    .strength-strong { width: 100%; background-color: #10b981; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -63,7 +56,6 @@
       <div class="hidden md:flex items-center gap-6">
         <a href="#demo" class="text-gray-700 hover:text-teal-600 transition-colors">See Demo</a>
         <a href="#how-it-works" class="text-gray-700 hover:text-teal-600 transition-colors">How It Works</a>
-        <a href="#pricing" class="text-gray-700 hover:text-teal-600 transition-colors">Pricing</a>
         <a href="#signup" class="text-gray-700 hover:text-teal-600 transition-colors">Get Access</a>
         <a href="https://app.notescraftai.com" class="px-5 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition-colors">Login</a>
       </div>
@@ -91,7 +83,6 @@
         <div class="mt-12 flex flex-col gap-6">
           <a href="#demo" class="text-gray-700 hover:text-teal-600 transition-colors text-lg">See Demo</a>
           <a href="#how-it-works" class="text-gray-700 hover:text-teal-600 transition-colors text-lg">How It Works</a>
-          <a href="#pricing" class="text-gray-700 hover:text-teal-600 transition-colors text-lg">Pricing</a>
           <a href="#signup" class="text-gray-700 hover:text-teal-600 transition-colors text-lg">Get Access</a>
         </div>
       </div>
@@ -101,682 +92,296 @@
   <!-- Mobile Menu Overlay -->
   <div id="menuOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"></div>
 
-  <!-- HERO SECTION - Improved Psychology -->
-  <section class="py-12 md:py-20 bg-gradient-to-b from-white via-teal-50/30 to-gray-50">
-    <div class="max-w-5xl mx-auto px-4 text-center">
+  <!-- HERO SECTION -->
+  <section class="py-12 md:py-16 bg-gradient-to-b from-white to-gray-50">
+    <div class="max-w-4xl mx-auto px-4 text-center">
 
-      <!-- Social Proof Badge -->
-      <div class="inline-flex items-center gap-2 bg-teal-100 text-teal-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-        </svg>
-        <span>Start free • Upgrade anytime for just $3</span>
-      </div>
-
-      <!-- Powerful Headline -->
-      <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
-        Stop Wasting Hours<br class="hidden md:block">
-        <span class="text-teal-600">Rewriting Notes</span>
+      <!-- Mobile-First Headline -->
+      <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 md:mb-6 leading-tight">
+        PDF to Study Notes<br class="md:hidden">
+        <span class="text-teal-600">in Minutes</span>
       </h1>
 
-      <!-- Clear Value Proposition -->
-      <p class="text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed">
-        Upload any PDF. Get organized, editable study notes in minutes.<br>
-        <span class="font-semibold text-gray-900">Every detail preserved. Nothing summarized.</span>
+      <!-- Simplified Benefit Statement -->
+      <p class="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 max-w-lg md:max-w-2xl mx-auto px-2">
+        <span class="md:hidden">Get organized Word notes from any PDF. Every detail preserved.</span>
+        <span class="hidden md:block">Upload your PDF, get back organized Word notes with every detail preserved. No summaries, no missed content.</span>
       </p>
 
-      <!-- Risk Reversal Statement -->
-      <p class="text-lg text-gray-500 mb-8">
-        Start with 3 free PDFs. Upgrade to unlimited for just $3/month.
-      </p>
-
-      <!-- Strong CTA with Visual Cue -->
-      <div class="mb-8 relative">
-        <a href="#signup" class="inline-block w-full md:w-auto px-10 py-5 bg-teal-600 text-white rounded-xl font-bold text-xl hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-          Yes, I Want Better Notes →
+      <!-- Prominent CTA -->
+      <div class="mb-6 md:mb-8">
+        <a href="#signup" class="inline-block w-full md:w-auto px-6 md:px-8 py-4 bg-teal-600 text-white rounded-xl font-bold text-lg hover:bg-teal-700 transition-colors shadow-lg">
+          Get Free Access
         </a>
-
-        <!-- Arrow pointing down (visual cue) -->
-        <div class="hidden md:block absolute -bottom-16 left-1/2 -translate-x-1/2 bounce-down">
-          <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </div>
+        <p class="text-sm text-gray-500 mt-3">No card required • Free forever</p>
       </div>
 
-      <!-- Trust Indicators with Icons -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto mt-16">
-        <div class="flex flex-col items-center">
-          <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
-            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-          </div>
-          <span class="font-semibold text-gray-900">3 Free PDFs</span>
-          <span class="text-sm text-gray-600">No card needed</span>
-        </div>
-
-        <div class="flex flex-col items-center">
-          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <span class="font-semibold text-gray-900">5-10 Minutes</span>
-          <span class="text-sm text-gray-600">Processing Time</span>
-        </div>
-
-        <div class="flex flex-col items-center">
-          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-2">
-            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-          </div>
-          <span class="font-semibold text-gray-900">Up to 25 Pages</span>
-          <span class="text-sm text-gray-600">Per PDF (Free)</span>
-        </div>
-
-        <div class="flex flex-col items-center">
-          <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mb-2">
-            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-            </svg>
-          </div>
-          <span class="font-semibold text-gray-900">Word File</span>
-          <span class="text-sm text-gray-600">Editable Format</span>
-        </div>
+      <!-- Minimal Trust Indicators -->
+      <div class="flex justify-center gap-4 text-sm text-gray-600">
+        <span class="md:hidden">✓ Free</span>
+        <span class="md:hidden">✓ Fast</span>
+        <span class="hidden md:inline">✓ 100% Free</span>
+        <span class="hidden md:inline">✓ No Credit Card</span>
+        <span class="hidden md:inline">✓ 5-10 Min Processing</span>
+        <span class="hidden md:inline">✓ Download Word Files</span>
       </div>
     </div>
   </section>
 
-  <!-- PROBLEM-SOLUTION SECTION (New - Builds Desire) -->
-  <section class="py-16 bg-white">
-    <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Studying From PDFs Is Painful</h2>
-
-      <div class="grid md:grid-cols-2 gap-8 mb-12">
-        <!-- The Problem -->
-        <div class="bg-red-50 border-2 border-red-200 rounded-xl p-6">
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-red-900">Without NotesCraft</h3>
-          </div>
-          <ul class="space-y-3 text-gray-700">
-            <li class="flex items-start gap-2">
-              <span class="text-red-500 font-bold">×</span>
-              <span>Spend hours manually rewriting dense PDF content</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-red-500 font-bold">×</span>
-              <span>Struggle to organize information into study-friendly format</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-red-500 font-bold">×</span>
-              <span>Miss important details while trying to summarize</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-red-500 font-bold">×</span>
-              <span>Waste valuable study time on formatting instead of learning</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- The Solution -->
-        <div class="bg-green-50 border-2 border-green-200 rounded-xl p-6">
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-green-900">With NotesCraft</h3>
-          </div>
-          <ul class="space-y-3 text-gray-700">
-            <li class="flex items-start gap-2">
-              <span class="text-green-500 font-bold">✓</span>
-              <span>Upload PDF and get organized notes in 5-10 minutes</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-green-500 font-bold">✓</span>
-              <span>AI automatically structures content with headings and bullet points</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-green-500 font-bold">✓</span>
-              <span>Every detail preserved – nothing summarized or skipped</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-green-500 font-bold">✓</span>
-              <span>Spend your time studying, not formatting</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Value Statement -->
-      <div class="bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl p-8 text-white text-center">
-        <p class="text-2xl md:text-3xl font-bold mb-2">Save 10+ Hours Every Week</p>
-        <p class="text-lg opacity-90">That's 40+ hours per month you can spend actually studying</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEMO SECTION - Enhanced -->
-  <section id="demo" class="py-16 bg-gray-50">
+  <!-- MOBILE-OPTIMIZED DEMO -->
+  <section id="demo" class="py-12 md:py-16 bg-white">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">See The Transformation</h2>
-        <p class="text-xl text-gray-600">Same content, completely reorganized for studying</p>
-      </div>
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">See The Difference</h2>
 
-      <!-- Desktop: Side by Side -->
-      <div class="hidden md:grid md:grid-cols-2 gap-8 mb-12">
-        <!-- Before -->
-        <div class="bg-red-50 border-2 border-red-200 rounded-xl p-6 transform transition-transform hover:scale-105">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center">
-              <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">BEFORE</span>
-              <span class="text-red-700 font-semibold">Dense PDF Text</span>
-            </div>
-            <span class="text-3xl">😫</span>
-          </div>
-          <div class="bg-white p-5 rounded-lg border-2 border-red-300 text-sm text-gray-800 h-80 overflow-y-auto font-mono leading-relaxed">
-            <p class="mb-4">Machine learning is a subset of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves. The process of learning begins with observations or data, such as examples, direct experience, or instruction, in order to look for patterns in data and make better decisions in the future based on the examples that we provide. The primary aim is to allow the computers learn automatically without human intervention or assistance and adjust actions accordingly. Machine learning algorithms are often categorized as supervised or unsupervised. Supervised machine learning algorithms can apply what has been learned in the past to new data using labeled examples to predict future events.</p>
-          </div>
-          <div class="mt-4 flex items-start gap-2 text-red-700">
-            <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-            </svg>
-            <span class="text-sm font-semibold">Hard to study from. No structure. Important points buried in paragraphs.</span>
-          </div>
-        </div>
-
-        <!-- After -->
-        <div class="bg-green-50 border-2 border-green-200 rounded-xl p-6 transform transition-transform hover:scale-105">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center">
-              <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">AFTER</span>
-              <span class="text-green-700 font-semibold">NotesCraft Output</span>
-            </div>
-            <span class="text-3xl">✨</span>
-          </div>
-          <div class="bg-white p-5 rounded-lg border-2 border-green-300 text-sm text-gray-800 h-80 overflow-y-auto">
-            <h3 class="text-xl font-bold text-gray-900 mb-4 border-b-2 border-teal-500 pb-2">What is Machine Learning?</h3>
-
-            <div class="mb-4">
-              <h4 class="font-bold text-teal-700 mb-2">Core Definition</h4>
-              <p class="leading-relaxed text-gray-700">Machine Learning (ML) is a specialized area within Artificial Intelligence (AI) that enables systems to automatically learn and improve from experience without being explicitly programmed for every task.</p>
-            </div>
-
-            <div class="mb-4">
-              <h4 class="font-bold text-teal-700 mb-2">Key Characteristics</h4>
-              <ul class="ml-4 space-y-2 text-gray-700 leading-relaxed">
-                <li class="flex items-start gap-2">
-                  <span class="text-teal-500 font-bold">•</span>
-                  <span>Focuses on creating computer programs that can access data and learn independently</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-teal-500 font-bold">•</span>
-                  <span>Learning begins with observations or data (examples, direct experience, or instruction)</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-teal-500 font-bold">•</span>
-                  <span>Aims to identify patterns in data for better future decision-making</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-teal-500 font-bold">•</span>
-                  <span>Primary goal: allow computers to learn automatically without human intervention</span>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-teal-700 mb-2">Algorithm Categories</h4>
-              <p class="leading-relaxed text-gray-700">ML algorithms are typically categorized as supervised or unsupervised. Supervised algorithms apply past learnings to new data using labeled examples to predict future events.</p>
-            </div>
-          </div>
-          <div class="mt-4 flex items-start gap-2 text-green-700">
-            <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-            </svg>
-            <span class="text-sm font-semibold">Organized, structured, study-ready. Same content, better format.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mobile: Stacked -->
+      <!-- Mobile: Stacked Cards -->
       <div class="md:hidden space-y-6 mb-8">
+        <!-- Before Card -->
         <div class="bg-red-50 border-2 border-red-200 rounded-xl p-4">
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center">
-              <span class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold mr-2">BEFORE</span>
-              <span class="text-red-700 font-semibold text-sm">Dense PDF</span>
-            </div>
-            <span class="text-2xl">😫</span>
+          <div class="flex items-center mb-3">
+            <span class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold mr-2">BEFORE</span>
+            <span class="text-red-700 font-semibold text-sm">Dense PDF</span>
           </div>
-          <div class="bg-white p-3 rounded border-2 border-red-300 text-xs text-gray-800 h-40 overflow-y-scroll font-mono">
-            <p>Machine learning is a subset of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves...</p>
+          <div class="bg-white p-3 rounded border text-xs text-gray-800 h-32 overflow-y-scroll">
+            <p>Machine learning is a subset of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data...</p>
           </div>
-          <p class="text-red-600 text-xs mt-2 font-semibold">❌ Hard to study from</p>
+          <p class="text-red-600 text-xs mt-2">Hard to study from</p>
         </div>
 
+        <!-- Arrow -->
         <div class="text-center">
-          <div class="inline-flex items-center justify-center w-10 h-10 bg-teal-500 text-white rounded-full shadow-lg">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="inline-flex items-center justify-center w-8 h-8 bg-teal-500 text-white rounded-full">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
           </div>
         </div>
 
+        <!-- After Card -->
         <div class="bg-green-50 border-2 border-green-200 rounded-xl p-4">
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center">
-              <span class="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold mr-2">AFTER</span>
-              <span class="text-green-700 font-semibold text-sm">NotesCraft</span>
-            </div>
-            <span class="text-2xl">✨</span>
+          <div class="flex items-center mb-3">
+            <span class="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold mr-2">AFTER</span>
+            <span class="text-green-700 font-semibold text-sm">NotesCraft</span>
           </div>
-          <div class="bg-white p-3 rounded border-2 border-green-300 text-xs text-gray-800 h-40 overflow-y-scroll">
-            <h4 class="font-bold text-base mb-2 text-gray-900">What is Machine Learning?</h4>
-            <p class="mb-2 text-xs leading-relaxed text-gray-700">Machine Learning (ML) is a specialized area within AI that enables systems to learn automatically.</p>
+          <div class="bg-white p-3 rounded border text-xs text-gray-800 h-32 overflow-y-scroll">
+            <h5 class="font-bold text-sm mb-2">What is Machine Learning?</h5>
+            <p class="mb-2 text-xs">Machine Learning (ML) is a specialized area within Artificial Intelligence (AI). It enables systems to automatically learn and get better from experience without being explicitly programmed for every single task.</p>
             <ul class="text-xs space-y-1">
-              <li>• Focuses on programs that learn from data independently</li>
-              <li>• Identifies patterns to make better future decisions</li>
-              <li>• Primary goal: automatic learning without human help</li>
+              <li>• Focuses on creating computer programs that can access data and learn from it independently</li>
+              <li>• The learning process starts with input data, which can include examples, direct experiences, or specific instructions</li>
+              <li>• It aims to find patterns within this data to make more accurate decisions in the future</li>
+              <li>• The primary objective is to allow computers to learn automatically, without human intervention, and adapt their actions accordingly</li>
             </ul>
           </div>
-          <p class="text-green-600 text-xs mt-2 font-semibold">✓ Organized & study-ready</p>
+          <p class="text-green-600 text-xs mt-2">Organized & study-ready</p>
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="bg-gradient-to-br from-teal-500 to-emerald-500 rounded-2xl p-6 md:p-10 text-white shadow-xl">
-        <h3 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center">Why Students Love NotesCraft</h3>
-        <div class="grid grid-cols-3 gap-4 md:gap-8">
-          <div class="text-center">
-            <div class="text-3xl md:text-5xl font-bold mb-2">100%</div>
-            <div class="text-sm md:text-base opacity-90">Content<br class="hidden md:block"> Preserved</div>
+      <!-- Desktop: Side by Side (Hidden on Mobile) -->
+      <div class="hidden md:grid md:grid-cols-2 gap-8 mb-12">
+        <!-- Desktop Before -->
+        <div class="bg-red-50 border-2 border-red-200 rounded-xl p-6">
+          <div class="flex items-center mb-4">
+            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">BEFORE</span>
+            <span class="text-red-700 font-semibold">Dense PDF Text</span>
           </div>
-          <div class="text-center">
-            <div class="text-3xl md:text-5xl font-bold mb-2">90%</div>
-            <div class="text-sm md:text-base opacity-90">Time<br class="hidden md:block"> Saved</div>
+          <div class="bg-white p-4 rounded-lg border text-sm text-gray-800 h-64 overflow-y-auto">
+            <p class="mb-4">Machine learning is a subset of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves. The process of learning begins with observations or data, such as examples, direct experience, or instruction, in order to look for patterns in data and make better decisions in the future based on the examples that we provide. The primary aim is to allow the computers learn automatically without human intervention or assistance and adjust actions accordingly...</p>
           </div>
-          <div class="text-center">
-            <div class="text-3xl md:text-5xl font-bold mb-2">5-10m</div>
-            <div class="text-sm md:text-base opacity-90">Processing<br class="hidden md:block"> Time</div>
+          <p class="text-red-600 text-sm mt-3">Hard to study from, poor organization</p>
+        </div>
+
+        <!-- Desktop After -->
+        <div class="bg-green-50 border-2 border-green-200 rounded-xl p-6">
+          <div class="flex items-center mb-4">
+            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">AFTER</span>
+            <span class="text-green-700 font-semibold">NotesCraft Output</span>
+          </div>
+          <div class="bg-white p-4 rounded-lg border text-sm text-gray-800 h-64 overflow-y-auto">
+            <h4 class="font-bold text-lg mb-3">What is Machine Learning?</h4>
+
+            <p class="mb-4 leading-relaxed">Machine Learning (ML) is a specialized area within Artificial Intelligence (AI). It enables systems to automatically learn and get better from experience without being explicitly programmed for every single task.</p>
+
+            <ul class="ml-4 space-y-2 text-sm leading-relaxed">
+              <li>• Focuses on creating computer programs that can access data and learn from it independently.</li>
+              <li>• The learning process starts with input data, which can include examples, direct experiences, or specific instructions.</li>
+              <li>• It aims to find patterns within this data to make more accurate decisions in the future.</li>
+              <li>• The primary objective is to allow computers to learn automatically, without human intervention, and adapt their actions accordingly.</li>
+            </ul>
+          </div>
+          <p class="text-green-600 text-sm mt-3">Organized, complete, study-ready</p>
+        </div>
+      </div>
+
+      <!-- Simple Results (Mobile Optimized) -->
+      <div class="bg-teal-50 rounded-xl p-4 md:p-8 text-center">
+        <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6">Same Content, Better Organization</h3>
+        <div class="grid grid-cols-3 gap-3 md:gap-6">
+          <div>
+            <div class="text-xl md:text-3xl font-bold text-teal-600">100%</div>
+            <div class="text-xs md:text-sm text-gray-600">Content Kept</div>
+          </div>
+          <div>
+            <div class="text-xl md:text-3xl font-bold text-emerald-600">90%</div>
+            <div class="text-xs md:text-sm text-gray-600">Time Saved</div>
+          </div>
+          <div>
+            <div class="text-xl md:text-3xl font-bold text-blue-600">5-10min</div>
+            <div class="text-xs md:text-sm text-gray-600">Processing</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
-  <section id="how-it-works" class="py-16 bg-white">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">How It Works</h2>
-      <p class="text-center text-gray-600 mb-12 text-lg">Three simple steps to better notes</p>
+  <!-- SIMPLE HOW IT WORKS -->
+  <section id="how-it-works" class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
 
-      <div class="grid md:grid-cols-3 gap-8 md:gap-12">
-        <div class="text-center relative">
-          <div class="w-20 h-20 bg-gradient-to-br from-teal-400 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg transform transition-transform hover:scale-110">
-            <span class="text-4xl">📄</span>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">📄</span>
           </div>
-          <div class="absolute top-10 -right-8 hidden md:block text-4xl text-teal-300">→</div>
-          <h3 class="font-bold text-xl mb-3">1. Upload PDF</h3>
-          <p class="text-gray-600 leading-relaxed">Drop any PDF file up to 25 pages. Lectures, textbooks, research papers – anything works.</p>
-        </div>
-
-        <div class="text-center relative">
-          <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg transform transition-transform hover:scale-110">
-            <span class="text-4xl">🧠</span>
-          </div>
-          <div class="absolute top-10 -right-8 hidden md:block text-4xl text-blue-300">→</div>
-          <h3 class="font-bold text-xl mb-3">2. AI Processing</h3>
-          <p class="text-gray-600 leading-relaxed">Our AI reads every word, identifies key concepts, and organizes everything into structured notes.</p>
+          <h3 class="font-bold mb-2">1. Upload PDF</h3>
+          <p class="text-gray-600">Drag and drop any PDF file up to 25 pages</p>
         </div>
 
         <div class="text-center">
-          <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg transform transition-transform hover:scale-110">
-            <span class="text-4xl">📝</span>
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">🧠</span>
           </div>
-          <h3 class="font-bold text-xl mb-3">3. Download Notes</h3>
-          <p class="text-gray-600 leading-relaxed">Get a perfectly formatted Word document. Edit, highlight, or share – it's yours to use.</p>
+          <h3 class="font-bold mb-2">2. AI Processing</h3>
+          <p class="text-gray-600">Our AI reads and organizes every detail</p>
         </div>
-      </div>
 
-      <!-- Additional Trust Building -->
-      <div class="mt-16 bg-gray-50 rounded-xl p-8 text-center">
-        <h3 class="text-2xl font-bold mb-6">Your Data is Safe With Us</h3>
-        <div class="grid md:grid-cols-3 gap-6 text-sm">
-          <div class="flex flex-col items-center">
-            <svg class="w-10 h-10 text-teal-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-            </svg>
-            <p class="font-semibold text-gray-900">256-Bit Encryption</p>
-            <p class="text-gray-600">Bank-level security</p>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">📝</span>
           </div>
-          <div class="flex flex-col items-center">
-            <svg class="w-10 h-10 text-teal-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-            </svg>
-            <p class="font-semibold text-gray-900">Auto-Delete Files</p>
-            <p class="text-gray-600">PDFs deleted after processing</p>
-          </div>
-          <div class="flex flex-col items-center">
-            <svg class="w-10 h-10 text-teal-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-            </svg>
-            <p class="font-semibold text-gray-900">GDPR Compliant</p>
-            <p class="text-gray-600">Your privacy protected</p>
-          </div>
+          <h3 class="font-bold mb-2">3. Download Notes</h3>
+          <p class="text-gray-600">Get structured Word document instantly</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SIGNUP SECTION - Enhanced with Scarcity -->
-  <section id="signup" class="py-16 bg-gradient-to-b from-gray-50 to-white">
-    <div class="max-w-2xl mx-auto px-6">
-      <div class="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-2xl p-8 md:p-12 text-center border-2 border-teal-200 shadow-xl">
+  <!-- UPDATED SIGNUP SECTION WITH PASSWORD -->
+  <section id="signup" class="py-16 bg-white">
+    <div class="max-w-lg mx-auto px-6">
+      <div class="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-2xl p-6 md:p-8 text-center">
 
-        <!-- Value Proposition -->
-        <div class="inline-flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-bold mb-6">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-          </svg>
-          <span>Try 3 PDFs free, then just $3/month for unlimited</span>
-        </div>
-
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Start With 3 Free PDFs</h2>
-        <p class="text-lg text-gray-600 mb-8">No credit card required. Upgrade anytime for unlimited access at just $3/month.</p>
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Create Your Free Account</h2>
+        <p class="text-gray-600 mb-6 md:mb-8 text-sm md:text-base">Start processing PDFs into perfect study notes today</p>
 
         <form id="earlyAccessForm" class="space-y-4">
-          <input type="email" id="email" name="email" required
-                 placeholder="Enter your email address"
-                 class="w-full px-6 py-5 border-2 border-gray-300 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 focus:outline-none text-lg transition-all">
+          <!-- Name Field (Optional) -->
+          <div class="text-left">
+            <input type="text" id="name" name="name"
+                   placeholder="Your name (optional)"
+                   class="w-full px-4 py-3 md:py-4 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none text-base md:text-lg transition-colors">
+          </div>
 
-          <button type="submit" class="w-full py-5 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-bold text-xl hover:from-teal-700 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-            Yes, Send Me Free Access →
+          <!-- Email Field -->
+          <div class="text-left">
+            <input type="email" id="email" name="email" required
+                   placeholder="Enter your email address"
+                   class="w-full px-4 py-3 md:py-4 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none text-base md:text-lg transition-colors">
+          </div>
+
+          <!-- Password Field with Toggle -->
+          <div class="text-left">
+            <div class="relative">
+              <input type="password" id="password" name="password" required
+                     placeholder="Create a password (min 8 characters)"
+                     minlength="8"
+                     class="w-full px-4 py-3 md:py-4 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none text-base md:text-lg pr-12 transition-colors">
+              <button type="button" id="togglePassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+                <svg id="eyeIcon" class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+              </button>
+            </div>
+            <!-- Password Strength Indicator -->
+            <div class="mt-2 h-1 bg-gray-200 rounded-full overflow-hidden">
+              <div id="passwordStrength" class="password-strength h-full"></div>
+            </div>
+            <p id="passwordHint" class="text-xs text-gray-500 mt-1">Use 8+ characters with letters and numbers</p>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="submitBtn" class="w-full py-3 md:py-4 bg-teal-600 text-white rounded-xl font-bold text-base md:text-lg hover:bg-teal-700 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            Create Free Account
           </button>
         </form>
 
-        <!-- Trust & Risk Reversal -->
-        <div class="mt-8 space-y-3">
-          <div class="flex items-center justify-center gap-2 text-sm text-gray-700">
-            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-            </svg>
-            <span class="font-semibold">3 PDFs free to start (up to 25 pages each)</span>
-          </div>
-          <div class="flex items-center justify-center gap-2 text-sm text-gray-700">
-            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-            </svg>
-            <span class="font-semibold">No credit card required</span>
-          </div>
-          <div class="flex items-center justify-center gap-2 text-sm text-gray-700">
-            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-            </svg>
-            <span class="font-semibold">Upgrade to $3/month for 20 PDFs (up to 40 pages each)</span>
-          </div>
+        <!-- Benefits -->
+        <div class="mt-6 space-y-2 text-xs md:text-sm text-gray-600">
+          <p>✓ Process up to 3 PDFs daily (25 pages each)</p>
+          <p>✓ No credit card required</p>
+          <p>✓ Instant access after signup</p>
         </div>
 
-        <!-- Privacy Statement -->
-        <p class="mt-6 text-xs text-gray-500">
-          🔒 We respect your privacy. Your email is only used to send access credentials.
-          We'll never share it or spam you.
-        </p>
-
-        <!-- Success/Error Messages -->
-        <div id="successMessage" class="hidden mt-6 p-5 bg-green-100 border-2 border-green-300 text-green-800 rounded-xl">
-          <div class="flex items-center justify-center gap-2 mb-2">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 text-green-800 rounded-lg border border-green-200">
+          <div class="flex items-center justify-center mb-2">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            <div class="font-bold text-lg">Welcome to NotesCraft! 🎉</div>
+            <div class="font-bold">Account created successfully!</div>
           </div>
-          <p class="text-sm">Check your email for instant access instructions. See you inside!</p>
+          <p class="text-sm">Redirecting to your dashboard...</p>
         </div>
 
-        <div id="errorMessage" class="hidden mt-6 p-5 bg-red-100 border-2 border-red-300 text-red-800 rounded-xl">
-          <div class="font-bold mb-2">Oops! Something went wrong</div>
-          <p class="text-sm">Please try again or contact support@notescraftai.com</p>
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden mt-6 p-4 bg-red-100 text-red-800 rounded-lg border border-red-200">
+          <div class="flex items-center justify-center mb-2">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="font-bold">Signup failed</div>
+          </div>
+          <p id="errorText" class="text-sm"></p>
         </div>
-      </div>
 
-      <!-- Social Proof Below Form -->
-      <div class="mt-8 text-center text-sm text-gray-600">
-        <p class="mb-2">Join students from:</p>
-        <div class="flex flex-wrap justify-center gap-3">
-          <span class="bg-white px-4 py-2 rounded-lg shadow-sm font-semibold">Stanford</span>
-          <span class="bg-white px-4 py-2 rounded-lg shadow-sm font-semibold">MIT</span>
-          <span class="bg-white px-4 py-2 rounded-lg shadow-sm font-semibold">Harvard</span>
-          <span class="bg-white px-4 py-2 rounded-lg shadow-sm font-semibold">UC Berkeley</span>
+        <!-- Already have account -->
+        <div class="mt-6 text-sm text-gray-600">
+          Already have an account? <a href="https://app.notescraftai.com" class="text-teal-600 font-semibold hover:underline">Login here</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PRICING SECTION -->
-  <section id="pricing" class="py-16 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
-        <p class="text-xl text-gray-600">Start free, upgrade when you need more</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <!-- Free Plan -->
-        <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 border-2 border-gray-200 relative">
-          <div class="text-center mb-6">
-            <h3 class="text-2xl font-bold text-gray-900 mb-2">Free Plan</h3>
-            <div class="text-4xl font-extrabold text-gray-900 mb-2">$0</div>
-            <p class="text-gray-600">Perfect to get started</p>
-          </div>
-
-          <ul class="space-y-4 mb-8">
-            <li class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <div>
-                <div class="font-semibold text-gray-900">3 PDFs per account</div>
-                <div class="text-sm text-gray-600">Try before you commit</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <div>
-                <div class="font-semibold text-gray-900">Up to 25 pages per PDF</div>
-                <div class="text-sm text-gray-600">Plenty for most lectures</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <div>
-                <div class="font-semibold text-gray-900">5-10 minute processing</div>
-                <div class="text-sm text-gray-600">Fast turnaround</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <div>
-                <div class="font-semibold text-gray-900">Editable Word files</div>
-                <div class="text-sm text-gray-600">Full editing freedom</div>
-              </div>
-            </li>
-          </ul>
-
-          <a href="#signup" class="block w-full py-4 bg-gray-700 text-white rounded-xl font-bold text-center hover:bg-gray-800 transition-colors">
-            Start Free
-          </a>
-        </div>
-
-        <!-- Pro Plan -->
-        <div class="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-2xl p-8 border-2 border-teal-500 relative transform md:scale-105 shadow-xl">
-          <!-- Popular Badge -->
-          <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-teal-600 to-emerald-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-            BEST VALUE
-          </div>
-
-          <div class="text-center mb-6 mt-2">
-            <h3 class="text-2xl font-bold text-gray-900 mb-2">Pro Plan</h3>
-            <div class="flex items-baseline justify-center gap-2 mb-2">
-              <span class="text-4xl font-extrabold text-teal-700">$3</span>
-              <span class="text-gray-600">/month</span>
-            </div>
-            <p class="text-gray-600">Less than a coffee ☕</p>
-          </div>
-
-          <ul class="space-y-4 mb-8">
-            <li class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-teal-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <div>
-                <div class="font-semibold text-gray-900">20 PDFs per month</div>
-                <div class="text-sm text-gray-600">More than enough for most students</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-teal-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <div>
-                <div class="font-semibold text-gray-900">Up to 40 pages per PDF</div>
-                <div class="text-sm text-gray-600">60% more than free plan</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-teal-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <div>
-                <div class="font-semibold text-gray-900">Priority processing</div>
-                <div class="text-sm text-gray-600">Faster turnaround times</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-teal-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <div>
-                <div class="font-semibold text-gray-900">Everything in Free</div>
-                <div class="text-sm text-gray-600">Plus all future features</div>
-              </div>
-            </li>
-          </ul>
-
-          <a href="#signup" class="block w-full py-4 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-bold text-center hover:from-teal-700 hover:to-emerald-700 transition-all shadow-lg transform hover:-translate-y-0.5">
-            Upgrade to Pro
-          </a>
-        </div>
-      </div>
-
-      <!-- Value Statement -->
-      <div class="mt-12 text-center">
-        <p class="text-gray-600 text-lg">
-          💡 <strong>Pro tip:</strong> Start free and upgrade only when you need more PDFs. No pressure, no commitment.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ - Enhanced -->
+  <!-- SIMPLE FAQ -->
   <section class="py-16 bg-gray-50">
     <div class="max-w-3xl mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Common Questions</h2>
-      <p class="text-center text-gray-600 mb-12">Everything you need to know</p>
+      <h2 class="text-3xl font-bold text-center mb-12">Common Questions</h2>
 
       <div class="space-y-4">
-        <details class="bg-white p-6 rounded-xl shadow-sm border-2 border-gray-100 hover:border-teal-200 transition-colors">
-          <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-            <span>How is NotesCraft different from AI summarizers?</span>
-            <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed">AI summarizers cut content and miss details. NotesCraft preserves <strong>every single word</strong> from your PDF – we just reorganize it into a study-friendly format with headings, bullet points, and clear structure. Nothing is summarized or removed.</p>
+        <details class="bg-white p-6 rounded-xl">
+          <summary class="font-semibold cursor-pointer">How is this different from AI summarizers?</summary>
+          <p class="mt-3 text-gray-600">AI summarizers cut content. We preserve every detail while organizing it perfectly for studying.</p>
         </details>
 
-        <details class="bg-white p-6 rounded-xl shadow-sm border-2 border-gray-100 hover:border-teal-200 transition-colors">
-          <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-            <span>What happens after I use my 3 free PDFs?</span>
-            <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed">After your 3 free PDFs, you can upgrade to our Pro plan for just $3/month. This gives you 20 PDFs per month with up to 40 pages each. You can upgrade anytime, and there's no pressure – your free PDFs never expire.</p>
+        <details class="bg-white p-6 rounded-xl">
+          <summary class="font-semibold cursor-pointer">How long does processing take?</summary>
+          <p class="mt-3 text-gray-600">Most PDFs process in 5-10 minutes. You'll see real-time progress updates.</p>
         </details>
 
-        <details class="bg-white p-6 rounded-xl shadow-sm border-2 border-gray-100 hover:border-teal-200 transition-colors">
-          <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-            <span>Can I cancel the Pro plan anytime?</span>
-            <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed">Absolutely! You can cancel anytime with no penalties or fees. If you cancel, you keep access until the end of your current billing period, and you won't be charged again.</p>
+        <details class="bg-white p-6 rounded-xl">
+          <summary class="font-semibold cursor-pointer">Is my data secure?</summary>
+          <p class="mt-3 text-gray-600">Yes. We process your PDF and immediately delete it. Your notes are delivered to you privately.</p>
         </details>
 
-        <details class="bg-white p-6 rounded-xl shadow-sm border-2 border-gray-100 hover:border-teal-200 transition-colors">
-          <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-            <span>How long does processing take?</span>
-            <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed">Most PDFs process in 5-10 minutes depending on length and complexity. Pro members get priority processing for even faster turnaround. You'll see real-time progress updates and get notified when your notes are ready.</p>
+        <details class="bg-white p-6 rounded-xl">
+          <summary class="font-semibold cursor-pointer">What format do I get?</summary>
+          <p class="mt-3 text-gray-600">Editable Word documents (.docx) that you can highlight, edit, and share.</p>
         </details>
 
-        <details class="bg-white p-6 rounded-xl shadow-sm border-2 border-gray-100 hover:border-teal-200 transition-colors">
-          <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-            <span>Is my data secure?</span>
-            <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed">Absolutely. We use 256-bit encryption during processing and automatically delete your PDF immediately after creating your notes. We're GDPR compliant and never store your documents.</p>
-        </details>
-
-        <details class="bg-white p-6 rounded-xl shadow-sm border-2 border-gray-100 hover:border-teal-200 transition-colors">
-          <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-            <span>What format do I get?</span>
-            <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed">You get a fully editable Word document (.docx) that you can open in Microsoft Word, Google Docs, or any word processor. Highlight, edit, share, or print – it's completely yours.</p>
-        </details>
-
-        <details class="bg-white p-6 rounded-xl shadow-sm border-2 border-gray-100 hover:border-teal-200 transition-colors">
-          <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-            <span>What types of PDFs work best?</span>
-            <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed">NotesCraft works with any text-based PDF: lecture slides, textbook chapters, research papers, articles, and more. Free plan handles up to 25 pages, Pro plan handles up to 40 pages per PDF.</p>
-        </details>
-
-        <details class="bg-white p-6 rounded-xl shadow-sm border-2 border-gray-100 hover:border-teal-200 transition-colors">
-          <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-            <span>Do unused PDFs roll over to next month?</span>
-            <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed">The Pro plan resets to 20 PDFs at the start of each billing cycle. We're keeping pricing simple and predictable – just $3/month for consistent access to 20 PDFs.</p>
+        <details class="bg-white p-6 rounded-xl">
+          <summary class="font-semibold cursor-pointer">How many PDFs can I process?</summary>
+          <p class="mt-3 text-gray-600">Free accounts get 3 PDFs per day (up to 25 pages each). That's plenty for most students!</p>
         </details>
       </div>
     </div>
@@ -787,17 +392,21 @@
     <div class="max-w-6xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
 
-        <!-- Company Info -->
+        <!-- Connect With NotesCraft -->
         <div>
-          <h3 class="text-white font-bold text-lg mb-4">NotesCraft AI</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">Transforming how students study, one PDF at a time.</p>
-          <div class="mt-4 space-y-2 text-sm">
+          <h3 class="text-white font-bold text-lg mb-4">Connect With NotesCraft</h3>
+          <div class="space-y-3 text-sm">
             <div class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
               </svg>
               <a href="mailto:support@notescraftai.com" class="hover:text-teal-400 transition-colors">support@notescraftai.com</a>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>24/7 Support Available</span>
             </div>
           </div>
         </div>
@@ -808,7 +417,6 @@
           <ul class="space-y-2 text-sm">
             <li><a href="#demo" class="hover:text-teal-400 transition-colors">See Demo</a></li>
             <li><a href="#how-it-works" class="hover:text-teal-400 transition-colors">How It Works</a></li>
-            <li><a href="#pricing" class="hover:text-teal-400 transition-colors">Pricing</a></li>
             <li><a href="https://app.notescraftai.com" class="hover:text-teal-400 transition-colors">Login to App</a></li>
             <li><a href="#signup" class="hover:text-teal-400 transition-colors">Get Free Access</a></li>
           </ul>
@@ -827,7 +435,7 @@
 
         <!-- Social -->
         <div>
-          <h3 class="text-white font-bold text-lg mb-4">Connect</h3>
+          <h3 class="text-white font-bold text-lg mb-4">Social</h3>
           <div class="flex flex-col gap-3 text-sm">
             <a href="https://x.com/NotesCraftAi" target="_blank" class="flex items-center gap-2 hover:text-teal-400 transition-colors">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -847,13 +455,15 @@
 
       <!-- Bottom Bar -->
       <div class="border-t border-gray-700 pt-8 text-center text-sm">
-        <p class="text-gray-400">&copy; 2025 NotesCraft AI. Empowering students to study smarter, not harder.</p>
+        <p>&copy; 2025 NotesCraft AI. Built for students who want better study materials. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
   <script>
-    // Mobile menu functionality
+    // ========================================
+    // MOBILE MENU
+    // ========================================
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
@@ -880,7 +490,9 @@
       link.addEventListener('click', closeMenu);
     });
 
-    // Progress bar
+    // ========================================
+    // PROGRESS BAR
+    // ========================================
     function updateProgressBar() {
       const scrollTop = window.pageYOffset;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -889,7 +501,9 @@
     }
     window.addEventListener('scroll', updateProgressBar);
 
-    // Fade in animations
+    // ========================================
+    // FADE IN ANIMATIONS
+    // ========================================
     const faders = document.querySelectorAll('.fade-in-up');
     const appearOnScroll = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -900,45 +514,155 @@
     }, { threshold: 0.2 });
     faders.forEach(fader => appearOnScroll.observe(fader));
 
-    // Form submission
+    // ========================================
+    // PASSWORD TOGGLE VISIBILITY
+    // ========================================
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    if (togglePassword) {
+      togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        if (type === 'password') {
+          eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>';
+        } else {
+          eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>';
+        }
+      });
+    }
+
+    // ========================================
+    // PASSWORD STRENGTH INDICATOR
+    // ========================================
+    const passwordStrength = document.getElementById('passwordStrength');
+    const passwordHint = document.getElementById('passwordHint');
+
+    passwordInput.addEventListener('input', function() {
+      const password = this.value;
+      let strength = 0;
+
+      if (password.length >= 8) strength++;
+      if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+      if (password.match(/[0-9]/)) strength++;
+      if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+      passwordStrength.className = 'password-strength h-full';
+
+      if (password.length === 0) {
+        passwordStrength.style.width = '0%';
+        passwordHint.textContent = 'Use 8+ characters with letters and numbers';
+        passwordHint.className = 'text-xs text-gray-500 mt-1';
+      } else if (strength <= 1) {
+        passwordStrength.classList.add('strength-weak');
+        passwordHint.textContent = 'Weak - Add more characters';
+        passwordHint.className = 'text-xs text-red-600 mt-1';
+      } else if (strength === 2) {
+        passwordStrength.classList.add('strength-medium');
+        passwordHint.textContent = 'Medium - Add numbers or symbols';
+        passwordHint.className = 'text-xs text-orange-600 mt-1';
+      } else {
+        passwordStrength.classList.add('strength-strong');
+        passwordHint.textContent = 'Strong password!';
+        passwordHint.className = 'text-xs text-green-600 mt-1';
+      }
+    });
+
+    // ========================================
+    // FORM SUBMISSION WITH API
+    // ========================================
     document.getElementById('earlyAccessForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      const email = document.getElementById('email').value;
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const submitBtn = document.getElementById('submitBtn');
+      const successMessage = document.getElementById('successMessage');
+      const errorMessage = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+
+      // Reset messages
+      successMessage.classList.add('hidden');
+      errorMessage.classList.add('hidden');
+
+      // Validate
+      if (!email || !password) {
+        errorText.textContent = 'Please fill in all required fields';
+        errorMessage.classList.remove('hidden');
+        return;
+      }
+
+      if (password.length < 8) {
+        errorText.textContent = 'Password must be at least 8 characters long';
+        errorMessage.classList.remove('hidden');
+        return;
+      }
 
       // Show loading
-      submitBtn.textContent = 'Creating Your Account...';
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Creating account...';
       submitBtn.disabled = true;
 
       try {
-        const response = await fetch('https://formspree.io/f/xykzgbep', {
+        // ⚠️ REPLACE THIS URL WITH YOUR ACTUAL RENDER.COM BACKEND URL
+        const API_URL = 'http://localhost:8000/api/signup';
+
+        console.log('Sending signup request to:', API_URL);
+
+        const response = await fetch(API_URL, {
           method: 'POST',
-          body: new FormData(e.target),
-          headers: { 'Accept': 'application/json' }
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            name: name || null
+          })
         });
 
-        if (response.ok) {
-          document.getElementById('successMessage').classList.remove('hidden');
+        const data = await response.json();
+        console.log('Response:', data);
+
+        if (response.ok && data.success) {
+          // Store token and user for auto-login
+          localStorage.setItem('notescraft_token', data.access_token);
+          localStorage.setItem('notescraft_user', JSON.stringify(data.user));
+
+          // Show success
+          successMessage.classList.remove('hidden');
           e.target.style.display = 'none';
+
+          // Redirect after 2 seconds
+          setTimeout(() => {
+            window.location.href = `https://app.notescraftai.com?token=${data.access_token}`;
+          }, 2000);
+
         } else {
-          throw new Error('Signup failed');
+          throw new Error(data.detail || data.message || 'Signup failed');
         }
+
       } catch (error) {
-        document.getElementById('errorMessage').classList.remove('hidden');
+        console.error('Signup error:', error);
+        errorText.textContent = error.message || 'Something went wrong. Please try again.';
+        errorMessage.classList.remove('hidden');
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
       }
     });
 
-    // Smooth scrolling
+    // ========================================
+    // SMOOTH SCROLLING
+    // ========================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          target.scrollIntoView({ behavior: 'smooth' });
         }
       });
     });
