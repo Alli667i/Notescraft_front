@@ -593,88 +593,89 @@
       }
     });
 
-    // ========================================
-    // FORM SUBMISSION WITH API
-    // ========================================
-    document.getElementById('earlyAccessForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
+      // FORM SUBMISSION WITH API
+  document.getElementById('earlyAccessForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const submitBtn = document.getElementById('submitBtn');
-      const successMessage = document.getElementById('successMessage');
-      const errorMessage = document.getElementById('errorMessage');
-      const errorText = document.getElementById('errorText');
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const submitBtn = document.getElementById('submitBtn');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+    const errorText = document.getElementById('errorText');
 
-      // Reset messages
-      successMessage.classList.add('hidden');
-      errorMessage.classList.add('hidden');
+    // Reset messages
+    successMessage.classList.add('hidden');
+    errorMessage.classList.add('hidden');
 
-      // Validate
-      if (!email || !password) {
-        errorText.textContent = 'Please fill in all required fields';
-        errorMessage.classList.remove('hidden');
-        return;
+    // Validate
+    if (!email || !password) {
+      errorText.textContent = 'Please fill in all required fields';
+      errorMessage.classList.remove('hidden');
+      return;
+    }
+
+    if (password.length < 8) {
+      errorText.textContent = 'Password must be at least 8 characters long';
+      errorMessage.classList.remove('hidden');
+      return;
+    }
+
+    // Show loading
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Creating account...';
+    submitBtn.disabled = true;
+
+    try {
+      const API_URL = 'https://app.notescraftai.com/api/signup';
+
+      console.log('Sending signup request to:', API_URL);
+
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          name: name || null
+        })
+      });
+
+      const data = await response.json();
+      console.log('Response:', data);
+
+      if (response.ok && data.success) {
+        // ✅ UPDATED: Show email verification message instead of redirect
+        successMessage.innerHTML = `
+          <div class="flex items-start justify-center mb-2">
+            <svg class="w-6 h-6 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <div>
+              <div class="font-bold">Check your email! 📧</div>
+              <p class="text-sm mt-1">We sent a verification link to <strong>${email}</strong></p>
+              <p class="text-sm mt-2">Click the link in the email to activate your account and start using NotesCraft AI.</p>
+            </div>
+          </div>
+        `;
+        successMessage.classList.remove('hidden');
+        e.target.style.display = 'none';
+
+      } else {
+        throw new Error(data.detail || data.message || 'Signup failed');
       }
 
-      if (password.length < 8) {
-        errorText.textContent = 'Password must be at least 8 characters long';
-        errorMessage.classList.remove('hidden');
-        return;
-      }
-
-      // Show loading
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Creating account...';
-      submitBtn.disabled = true;
-
-      try {
-        const API_URL = 'https://app.notescraftai.com/api/signup';
-
-        console.log('Sending signup request to:', API_URL);
-
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-            name: name || null
-          })
-        });
-
-        const data = await response.json();
-        console.log('Response:', data);
-
-        if (response.ok && data.success) {
-          // Store token and user for auto-login
-          localStorage.setItem('notescraft_token', data.access_token);
-          localStorage.setItem('notescraft_user', JSON.stringify(data.user));
-
-          // Show success
-          successMessage.classList.remove('hidden');
-          e.target.style.display = 'none';
-
-          // Redirect after 2 seconds
-          setTimeout(() => {
-            window.location.href = `https://app.notescraftai.com?token=${data.access_token}`;
-          }, 2000);
-
-        } else {
-          throw new Error(data.detail || data.message || 'Signup failed');
-        }
-
-      } catch (error) {
-        console.error('Signup error:', error);
-        errorText.textContent = error.message || 'Something went wrong. Please try again.';
-        errorMessage.classList.remove('hidden');
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      }
-    });
+    } catch (error) {
+      console.error('Signup error:', error);
+      errorText.textContent = error.message || 'Something went wrong. Please try again.';
+      errorMessage.classList.remove('hidden');
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
 
     // ========================================
     // SMOOTH SCROLLING
