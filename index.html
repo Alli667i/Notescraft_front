@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NotesCraft AI – Your Exam Is Tomorrow. Don't Spend Tonight Fighting a PDF.</title>
+  <meta name="description" content="Upload your textbook chapter or lecture notes. Get back a plain English breakdown you can actually study from. Ready in 10 minutes." />
+  <link rel="icon" href="assets/favicon.ico">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LN47BFH410"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LN47BFH410');
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --teal:        #00A693;
+      --teal-dark:   #008578;
+      --teal-light:  #E6F7F5;
+      --teal-mid:    #b2e8e2;
+      --bg:          #F8FAFA;
+      --dark:        #0F1F1D;
+      --dark-cta:    #0F2027;
+      --text:        #1A1A2E;
+      --muted:       #6B7280;
+      --red-soft:    #FFF0F0;
+      --red-border:  #FCA5A5;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Sora', sans-serif;
+      line-height: 1.2;
+    }
+
+
+
+    /* ── NAV ── */
+    .navbar {
+      background: rgba(248, 250, 250, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,166,147,0.12);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    /* ── HERO ── */
+    .hero-section {
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(0,166,147,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── FOUNDER NOTE ── */
+    .founder-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+    .founder-note::before {
+      content: '—';
+      color: var(--teal);
+      font-style: normal;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: inline-block;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+
+    /* ── DEMO PANELS ── */
+    .demo-before {
+      background: #FFFAF9;
+      border: 2px solid var(--red-border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .demo-after {
+      background: #fff;
+      border: 2px solid var(--teal-mid);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .demo-before-header {
+      background: #FEE2E2;
+      color: #B91C1C;
+      padding: 10px 18px;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .demo-after-header {
+      background: var(--teal);
+      color: #fff;
+      padding: 10px 18px;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .demo-before-body {
+      padding: 20px;
+      font-size: 0.82rem;
+      color: #6B7280;
+      line-height: 1.7;
+      height: 300px;
+      overflow-y: auto;
+      font-family: 'Georgia', serif;
+    }
+    .demo-after-body {
+      padding: 20px;
+      font-size: 0.86rem;
+      color: var(--text);
+      line-height: 1.75;
+      height: 300px;
+      overflow-y: auto;
+    }
+    .demo-after-body h4 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .demo-after-body h5 {
+      font-family: 'Sora', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--teal-dark);
+      margin: 12px 0 6px;
+    }
+    .demo-after-body ul {
+      padding-left: 4px;
+      list-style: none;
+    }
+    .demo-after-body ul li {
+      padding: 3px 0 3px 16px;
+      position: relative;
+      font-size: 0.83rem;
+    }
+    .demo-after-body ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--teal);
+      font-weight: 700;
+    }
+    .demo-after-body .example-note {
+      background: var(--teal-light);
+      border-left: 3px solid var(--teal);
+      padding: 8px 12px;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.8rem;
+      color: var(--teal-dark);
+      margin: 8px 0;
+      font-style: italic;
+    }
+
+    /* ── STEPS ── */
+    .step-number {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: white;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── WHO TILES ── */
+    .who-tile {
+      background: white;
+      border-radius: 14px;
+      padding: 28px 24px;
+      border: 1.5px solid rgba(0,166,147,0.15);
+      box-shadow: 0 2px 16px rgba(0,166,147,0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .who-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,166,147,0.12);
+    }
+    .who-tile-icon {
+      width: 48px; height: 48px;
+      background: var(--teal-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    /* ── TRUST SECTION ── */
+    .trust-section {
+      background: white;
+    }
+    .trust-point {
+      padding: 0 0 28px;
+      border-bottom: 1px solid rgba(0,166,147,0.1);
+    }
+    .trust-point:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    /* ── FINAL CTA ── */
+    .cta-section {
+      background: var(--dark-cta);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      bottom: -100px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,166,147,0.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      top: -80px; left: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(52,211,153,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ── CTA BUTTON ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--teal);
+      color: white;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 15px 32px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px rgba(0,166,147,0.3);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      background: var(--teal-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,166,147,0.4);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-primary-inverted {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      color: var(--dark-cta);
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 15px 32px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary-inverted:hover {
+      background: #f0fffe;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+
+    /* ── FORM ── */
+    .form-input {
+      width: 100%;
+      padding: 14px 14px 14px 44px;
+      border: 2px solid #E5E7EB;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(0,166,147,0.1);
+    }
+    .form-input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9CA3AF;
+      pointer-events: none;
+    }
+
+
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      position: fixed;
+      top: 0; right: 0;
+      width: 16rem;
+      height: 100vh;
+      background: white;
+      box-shadow: -4px 0 32px rgba(0,0,0,0.15);
+      z-index: 9999;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      overflow-y: auto;
+    }
+    .mobile-menu.active { transform: translateX(0); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MOBILE BUTTON FIX ── */
+    @media (max-width: 768px) {
+      button, a { min-height: 44px; }
+      .btn-primary, .btn-primary-inverted { width: 100%; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark-cta);
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+  </style>
+</head>
+<body>
+
+
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
+  <header class="navbar">
+    <nav class="max-w-6xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="/" style="font-family:'Sora',sans-serif; font-weight:800; font-size:1.2rem; color:var(--teal); text-decoration:none; letter-spacing:-0.02em;">
+        NotesCraft <span style="color:var(--text);">AI</span>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-7">
+        <a href="#how-it-works" style="font-size:0.9rem; color:var(--muted); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--muted)'">How It Works</a>
+        <a href="#demo" style="font-size:0.9rem; color:var(--muted); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--muted)'">See Demo</a>
+        <a href="#signup" style="font-size:0.9rem; color:var(--muted); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--muted)'">Get Started Free</a>
+        <a href="https://app.notescraftai.com" class="btn-primary" style="padding:10px 22px; font-size:0.88rem;">Login</a>
+      </div>
+
+      <!-- Mobile: Login + Hamburger -->
+      <div class="md:hidden flex items-center gap-3">
+        <a href="https://app.notescraftai.com" class="btn-primary" style="padding:9px 18px; font-size:0.85rem; width:auto; min-height:unset;">Login</a>
+        <button id="mobileMenuBtn" style="background:none; border:none; cursor:pointer; padding:6px; color:var(--text); min-height:unset;">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile menu overlay -->
+  <div id="menuOverlay" class="hidden fixed inset-0 bg-black bg-opacity-40 z-[9998]"></div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="mobile-menu">
+    <div class="p-6">
+      <button id="closeMenuBtn" style="position:absolute; top:16px; right:16px; background:none; border:none; cursor:pointer; color:var(--text); padding:6px; min-height:unset;">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <div style="margin-top:52px; display:flex; flex-direction:column; gap:20px;">
+        <a href="#how-it-works" style="font-family:'Sora',sans-serif; font-size:1rem; color:var(--text); text-decoration:none; padding:4px 0;">How It Works</a>
+        <a href="#demo" style="font-family:'Sora',sans-serif; font-size:1rem; color:var(--text); text-decoration:none; padding:4px 0;">See Demo</a>
+        <a href="#signup" style="font-family:'Sora',sans-serif; font-size:1rem; color:var(--text); text-decoration:none; padding:4px 0;">Get Started Free</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section class="hero-section py-20 md:py-28">
+    <div class="max-w-3xl mx-auto px-5 md:px-8 text-center">
+
+      <h1 class="reveal" style="font-size: clamp(2rem, 5.5vw, 3.4rem); font-weight:800; color:var(--text); margin-bottom:20px; letter-spacing:-0.03em; line-height:1.15;">
+        Your Exam Is Tomorrow.<br>
+        <span style="color:var(--teal);">Don't Spend Tonight Fighting a PDF.</span>
+      </h1>
+
+      <p class="reveal" style="font-size: clamp(1rem, 2.2vw, 1.18rem); color:var(--muted); max-width:560px; margin:0 auto 32px; line-height:1.7; transition-delay:0.1s;">
+        Upload your textbook chapter or lecture notes. Get back a plain English breakdown you can actually study from. Ready in 10 minutes.
+      </p>
+
+      <div class="reveal" style="transition-delay:0.2s;">
+        <a href="#signup" class="btn-primary" style="font-size:1.05rem; padding:16px 36px;">
+          Upload Your First PDF Free
+        </a>
+        <p style="font-size:0.8rem; color:var(--muted); margin-top:12px;">
+          No credit card. No setup. 3 PDFs free.
+        </p>
+        <p class="founder-note">
+          Built by a student who spent one too many nights fighting dense PDFs the night before exams.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       DEMO — BEFORE / AFTER
+  ═══════════════════════════════════════ -->
+  <section id="demo" style="background: white; padding: 80px 0 100px;">
+    <div class="max-w-6xl mx-auto px-5 md:px-8">
+
+      <div class="text-center reveal" style="margin-bottom:48px;">
+        <span class="section-label">See What Happens to Your PDF</span>
+        <h2 style="font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight:800; color:var(--text); letter-spacing:-0.025em;">
+          From impossible to read.<br>
+          <span style="color:var(--teal);">To actually understandable.</span>
+        </h2>
+      </div>
+
+      <!-- Panels -->
+      <div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:24px; transition-delay:0.15s;">
+
+        <!-- BEFORE -->
+        <div class="demo-before">
+          <div class="demo-before-header">Your PDF — Dense. Difficult. Takes hours.</div>
+          <div class="demo-before-body">
+            <p>Why Did OPEC Fail to Keep the Price of Oil High? Many of the most disruptive events for the world's economies over the past several decades have originated in the world market for oil. In the 1970s, members of the Organization of the Petroleum Exporting Countries (OPEC) decided to raise the world price of oil to increase their incomes. These countries accomplished this goal by agreeing to jointly reduce the amount of oil they supplied. As a result, the price of oil (adjusted for overall inflation) rose more than 50 percent from 1973 to 1974. Then, a few years later, OPEC did the same thing again. From 1979 to 1981, the price of oil approximately doubled. Yet OPEC found it difficult to maintain such a high price. From 1982 to 1985, the price of oil steadily declined about 10 percent per year. Dissatisfaction and disarray soon prevailed among the OPEC countries. In 1986, cooperation among OPEC members completely broke down, and the price of oil plunged 45 percent. In 1990, the price of oil (adjusted for overall inflation) was back to where it began in 1970, and it stayed at that low level throughout most of the 1990s.</p>
+            <p style="margin-top:12px;">The OPEC episodes of the 1970s and 1980s show how supply and demand can behave differently in the short run and in the long run. In the short run, both the supply and demand for oil are relatively inelastic. Supply is inelastic because the quantity of known oil reserves and the capacity for oil extraction cannot be changed quickly. Demand is inelastic because buying habits do not respond immediately to changes in price. Thus, as panel (a) of Figure 8 shows, the short-run supply and demand curves are steep. When the supply of oil shifts from S1 to S2, the price increase from P1 to P2 is large...</p>
+          </div>
+        </div>
+
+        <!-- AFTER -->
+        <div class="demo-after">
+          <div class="demo-after-header">NotesCraft Output — Plain English. Ready to study.</div>
+          <div class="demo-after-body">
+            <h4>Why OPEC Failed to Keep Oil Prices High</h4>
+
+            <h5>Short-Term Success: Limited Options Mean High Prices</h5>
+            <p style="font-size:0.83rem; margin-bottom:8px;">When OPEC first cut oil supply, prices shot up because people and other countries couldn't change their habits or find new oil quickly. Everyone was pretty much stuck needing the same amount of oil, no matter the price.</p>
+            <ul>
+              <li>Oil companies outside OPEC couldn't immediately pump more oil — it takes time to find and drill new wells.</li>
+            </ul>
+            <div class="example-note">Example: If gas prices suddenly double, you still need to drive to work today. You can't just stop using gas overnight.</div>
+
+            <h5>Long-Term Failure: The World Adapts</h5>
+            <p style="font-size:0.83rem; margin-bottom:8px;">Over time, high oil prices encouraged everyone to adapt. People found ways to use less oil, and other countries started producing more of their own.</p>
+            <ul>
+              <li>Consumers: People bought more fuel-efficient cars, used public transport, or found ways to drive less.</li>
+              <li>Producers: Other countries started investing in new oil exploration when they saw how much money could be made.</li>
+            </ul>
+
+            <h5>The Big Lesson: Time Changes Everything</h5>
+            <p style="font-size:0.83rem;">OPEC learned that it's easy to shock the market and raise prices in the short run. But trying to keep those prices high is tough — given enough time, the world always finds new ways to respond and adapt.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mobile stacked panels -->
+      <style>
+        @media (max-width: 767px) {
+          #demo-panels { grid-template-columns: 1fr !important; }
+          .demo-before-body, .demo-after-body { height: 220px; }
+        }
+      </style>
+
+      <p class="reveal" style="text-align:center; color:var(--muted); font-size:0.95rem; margin-top:28px; transition-delay:0.2s;">
+        Same content. Easier to understand. Takes 10 minutes.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- Apply mobile grid fix -->
+  <script>
+    document.querySelector('.reveal[style*="grid-template-columns"]') && (
+      document.querySelector('.reveal[style*="grid-template-columns"]').id = 'demo-panels'
+    );
+  </script>
+
+
+  <!-- ═══════════════════════════════════════
+       HOW IT WORKS
+  ═══════════════════════════════════════ -->
+  <section id="how-it-works" style="background:var(--bg); padding:90px 0;">
+    <div class="max-w-4xl mx-auto px-5 md:px-8">
+
+      <div class="text-center reveal" style="margin-bottom:56px;">
+        <span class="section-label">The Process</span>
+        <h2 style="font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight:800; color:var(--text); letter-spacing:-0.025em;">
+          Three steps. Ten minutes. Done.
+        </h2>
+      </div>
+
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:0;">
+
+        <!-- Step 1 -->
+        <div class="reveal" style="display:flex; align-items:flex-start; gap:24px; padding:28px 0; border-bottom:1px solid rgba(0,166,147,0.1);">
+          <div class="step-number">1</div>
+          <div>
+            <h3 style="font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:6px;">Upload your PDF</h3>
+            <p style="color:var(--muted); font-size:0.95rem; max-width:520px;">Textbook chapter, lecture notes, past papers — up to 60 pages. Drag and drop or click to upload. Done in 30 seconds.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="reveal" style="display:flex; align-items:flex-start; gap:24px; padding:28px 0; border-bottom:1px solid rgba(0,166,147,0.1); transition-delay:0.1s;">
+          <div class="step-number">2</div>
+          <div>
+            <h3 style="font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:6px;">We make it understandable</h3>
+            <p style="color:var(--muted); font-size:0.95rem; max-width:520px;">Our AI rewrites dense academic language into plain English you can actually study from. Takes 5–10 minutes. You don't have to wait around.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="reveal" style="display:flex; align-items:flex-start; gap:24px; padding:28px 0; transition-delay:0.2s;">
+          <div class="step-number">3</div>
+          <div>
+            <h3 style="font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:6px;">Get your notes by email</h3>
+            <p style="color:var(--muted); font-size:0.95rem; max-width:520px;">We email you when it's ready. Close the tab, go do something else. Come back and download your Word file. Files saved for 7 days.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="reveal" style="text-align:center; color:var(--muted); font-size:0.88rem; font-style:italic; margin-top:40px; transition-delay:0.3s;">
+        Upload in 30 seconds. Walk away. Study in plain English.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       WHO THIS IS FOR
+  ═══════════════════════════════════════ -->
+  <section style="background:white; padding:90px 0;">
+    <div class="max-w-5xl mx-auto px-5 md:px-8">
+
+      <div class="text-center reveal" style="margin-bottom:52px;">
+        <span class="section-label">Who It's For</span>
+        <h2 style="font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight:800; color:var(--text); letter-spacing:-0.025em;">
+          Built for the night before the exam
+        </h2>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;" class="reveal" id="who-grid">
+        <style>@media(max-width:767px){#who-grid{grid-template-columns:1fr!important;}}</style>
+
+        <!-- Tile 1 -->
+        <div class="who-tile">
+          <div class="who-tile-icon">
+            <svg width="22" height="22" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+          </div>
+          <h3 style="font-size:1rem; font-weight:700; color:var(--text); margin-bottom:8px;">You have a textbook chapter you haven't read</h3>
+          <p style="font-size:0.88rem; color:var(--muted); line-height:1.65;">Upload it. Get back the key ideas in plain English without reading 60 pages of academic language the night before an exam.</p>
+        </div>
+
+        <!-- Tile 2 -->
+        <div class="who-tile" style="transition-delay:0.1s;">
+          <div class="who-tile-icon">
+            <svg width="22" height="22" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 style="font-size:1rem; font-weight:700; color:var(--text); margin-bottom:8px;">You have lecture notes that make no sense</h3>
+          <p style="font-size:0.88rem; color:var(--muted); line-height:1.65;">Dense slides, complicated diagrams, academic jargon. Upload them the night before your exam and get back something you can actually revise from in plain English.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       TRUST
+  ═══════════════════════════════════════ -->
+  <section class="trust-section" style="padding:90px 0; background:var(--bg);">
+    <div class="max-w-3xl mx-auto px-5 md:px-8">
+
+      <div class="text-center reveal" style="margin-bottom:52px;">
+        <span class="section-label">A Few Things Worth Knowing</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:0;">
+
+        <div class="trust-point reveal">
+          <h3 style="font-size:1rem; font-weight:700; color:var(--text); margin-bottom:6px;">Your PDF is deleted after processing</h3>
+          <p style="font-size:0.92rem; color:var(--muted); line-height:1.7;">We don't store your documents. Once your notes are generated, your original file is gone. Your notes are saved for 7 days then deleted too.</p>
+        </div>
+
+        <div class="trust-point reveal" style="padding-top:28px; transition-delay:0.1s;">
+          <h3 style="font-size:1rem; font-weight:700; color:var(--text); margin-bottom:6px;">No AI prompt engineering required</h3>
+          <p style="font-size:0.92rem; color:var(--muted); line-height:1.7;">You don't need to know how to talk to AI. Upload your file and we handle everything. The output is consistent every time.</p>
+        </div>
+
+        <div class="trust-point reveal" style="padding-top:28px; transition-delay:0.2s;">
+          <h3 style="font-size:1rem; font-weight:700; color:var(--text); margin-bottom:6px;">Built by a student who had the same problem</h3>
+          <p style="font-size:0.92rem; color:var(--muted); line-height:1.7;">NotesCraft was built because its founder was failing to get through dense PDFs the night before exams. This tool exists because nothing else did the job simply enough.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SIGNUP
+  ═══════════════════════════════════════ -->
+  <section id="signup" style="background:white; padding:90px 0;">
+    <div class="max-w-5xl mx-auto px-5 md:px-8">
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;" id="signup-grid">
+        <style>@media(max-width:767px){#signup-grid{grid-template-columns:1fr!important; gap:32px;}}</style>
+
+        <!-- LEFT: Copy -->
+        <div class="reveal">
+          <span class="section-label">Get Started Free</span>
+          <h2 style="font-size: clamp(1.6rem, 3.5vw, 2.3rem); font-weight:800; color:var(--text); letter-spacing:-0.025em; margin-bottom:16px;">
+            Your study notes are<br>10 minutes away.
+          </h2>
+          <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:0;">
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+              <div style="width:34px; height:34px; background:var(--teal-light); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <p style="font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:2px;">Email notification when ready</p>
+                <p style="font-size:0.82rem; color:var(--muted);">Upload and close the tab. We'll come to you.</p>
+              </div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+              <div style="width:34px; height:34px; background:var(--teal-light); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <div>
+                <p style="font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:2px;">3 free PDFs — 60 pages each</p>
+
+              </div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+              <div style="width:34px; height:34px; background:var(--teal-light); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              </div>
+              <div>
+                <p style="font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:2px;">Files saved for 7 days</p>
+                <p style="font-size:0.82rem; color:var(--muted);">Download whenever you're ready. Auto-deleted after a week.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div class="reveal" style="transition-delay:0.15s;">
+          <div style="background:white; border:1.5px solid rgba(0,166,147,0.2); border-radius:16px; padding:32px; box-shadow:0 4px 32px rgba(0,166,147,0.08);">
+
+            <h3 style="font-family:'Sora',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text); margin-bottom:24px;">Create your free account</h3>
+
+            <form id="signupForm" style="display:flex; flex-direction:column; gap:16px;">
+
+              <!-- Email -->
+              <div style="position:relative;">
+                <span class="form-input-icon">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </span>
+                <input type="email" id="email" name="email" required placeholder="Enter your email" class="form-input">
+              </div>
+
+              <!-- Password -->
+              <div>
+                <div style="position:relative;">
+                  <span class="form-input-icon">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                  </span>
+                  <input type="password" id="password" name="password" required placeholder="Create password (min 8 chars)" minlength="8" class="form-input" style="padding-right:44px;">
+                  <button type="button" id="togglePw" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#9CA3AF; padding:4px; min-height:unset;">
+                    <svg id="eyeIcon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" id="submitBtn" class="btn-primary" style="width:100%; margin-top:4px; font-size:1rem;">
+                Create Free Account →
+              </button>
+
+            </form>
+
+            <!-- Success -->
+            <div id="successMsg" style="display:none; margin-top:20px; background:#F0FDF4; border:2px solid #86EFAC; border-radius:12px; padding:24px; text-align:center;">
+              <div style="font-size:2.5rem; margin-bottom:10px;">🎉</div>
+              <p style="font-family:'Sora',sans-serif; font-weight:700; color:#15803D; font-size:1rem; margin-bottom:6px;">You're in!</p>
+              <p id="successEmail" style="font-size:0.85rem; color:#16A34A; line-height:1.5;"></p>
+              <p style="font-size:0.78rem; color:#4ADE80; margin-top:8px;">Can't find it? Check your spam folder.</p>
+            </div>
+
+            <!-- Error -->
+            <div id="errorMsg" style="display:none; margin-top:16px; background:#FEF2F2; border:2px solid #FCA5A5; border-radius:10px; padding:14px;">
+              <p id="errorText" style="font-size:0.85rem; color:#B91C1C; text-align:center;"></p>
+            </div>
+
+            <p style="font-size:0.8rem; color:var(--muted); text-align:center; margin-top:18px;">
+              Already have an account? <a href="https://app.notescraftai.com" style="color:var(--teal); font-weight:600; text-decoration:none;">Login here</a>
+            </p>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       FINAL CTA
+  ═══════════════════════════════════════ -->
+  <section class="cta-section" style="padding:100px 0;">
+    <div class="max-w-2xl mx-auto px-5 md:px-8 text-center" style="position:relative; z-index:1;">
+
+      <h2 class="reveal" style="font-size: clamp(1.7rem, 4.5vw, 2.8rem); font-weight:800; color:white; letter-spacing:-0.03em; line-height:1.15; margin-bottom:20px;">
+        Your next exam is coming.<br>
+        <span style="color:#5EEAD4;">Your PDFs aren't going to read themselves.</span>
+      </h2>
+
+      <p class="reveal" style="font-size:1rem; color:rgba(255,255,255,0.65); margin-bottom:36px; line-height:1.7; transition-delay:0.1s;">
+        Upload your first PDF free. No credit card. See what your notes look like in 10 minutes.
+      </p>
+
+      <div class="reveal" style="transition-delay:0.2s;">
+        <a href="#signup" class="btn-primary-inverted">
+          Get Started Free
+        </a>
+        <p style="font-size:0.78rem; color:rgba(255,255,255,0.4); margin-top:14px;">
+          3 free PDFs. 60 pages each. No card needed.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer style="padding:48px 0 32px;">
+    <div class="max-w-6xl mx-auto px-5 md:px-8">
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:20px; text-align:center;">
+
+        <p style="font-family:'Sora',sans-serif; font-size:0.95rem; font-weight:700; color:white; letter-spacing:-0.01em;">
+          NotesCraft AI
+        </p>
+        <p style="font-size:0.82rem; color:rgba(255,255,255,0.35); max-width:360px; line-height:1.6;">
+          Built for students who need to understand fast.
+        </p>
+
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:6px 24px; margin-top:4px;">
+          <a href="privacy.html" style="font-size:0.82rem; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Privacy Policy</a>
+          <a href="terms.html" style="font-size:0.82rem; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Terms of Service</a>
+          <a href="contact_us.html" style="font-size:0.82rem; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Contact</a></div>
+        <span style="font-size:0.82rem; color:rgba(255,255,255,0.4);">ali@notescraftai.com</span>
+        <div style="width:100%; height:1px; background:rgba(255,255,255,0.07); margin-top:12px;"></div>
+        <p style="font-size:0.75rem; color:rgba(255,255,255,0.2);">© 2026 NotesCraft AI. All rights reserved.</p>
+
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════ -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+
+
+    // ── SCROLL REVEAL ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── MOBILE MENU ──
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const openMenu = () => {
+      mobileMenu.classList.add('active');
+      menuOverlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = () => {
+      mobileMenu.classList.remove('active');
+      menuOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+    document.getElementById('mobileMenuBtn').addEventListener('click', openMenu);
+    document.getElementById('closeMenuBtn').addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+    // ── PASSWORD TOGGLE ──
+    const pwInput = document.getElementById('password');
+    document.getElementById('togglePw').addEventListener('click', () => {
+      const isText = pwInput.type === 'text';
+      pwInput.type = isText ? 'password' : 'text';
+      document.getElementById('eyeIcon').innerHTML = isText
+        ? '<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>'
+        : '<path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>';
+    });
+
+
+
+    // ── FORM SUBMISSION ──
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('submitBtn');
+      const successMsg = document.getElementById('successMsg');
+      const errorMsg = document.getElementById('errorMsg');
+      const errorText = document.getElementById('errorText');
+
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+
+      if (!email || !password) {
+        errorText.textContent = 'Please fill in all required fields.';
+        errorMsg.style.display = 'block';
+        return;
+      }
+      if (password.length < 8) {
+        errorText.textContent = 'Password must be at least 8 characters.';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      const original = btn.innerHTML;
+      btn.innerHTML = 'Creating account...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('https://app.notescraftai.com/api/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          document.getElementById('signupForm').style.display = 'none';
+          document.getElementById('successEmail').innerHTML =
+            `We sent a verification link to <strong>${email}</strong>.<br>Click it to activate your account and start converting PDFs.`;
+          successMsg.style.display = 'block';
+        } else {
+          throw new Error(data.detail || data.message || 'Signup failed. Please try again.');
+        }
+      } catch (err) {
+        errorText.textContent = err.message;
+        errorMsg.style.display = 'block';
+        btn.innerHTML = original;
+        btn.disabled = false;
+      }
+    });
+
+    // ── SMOOTH SCROLL ──
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+  </script>
+
+</body>
+</html>
